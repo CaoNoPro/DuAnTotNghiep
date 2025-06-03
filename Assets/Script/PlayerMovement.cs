@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 12f;
     public float gravity = -9.81f * 2;
     public float jumpHeight = 3f;
+    public float RunSpeed = 20f; // Speed when running
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -41,6 +42,15 @@ public class PlayerMovement : MonoBehaviour
         if(Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity); //jumping
+        }
+
+        if(Input.GetKey(KeyCode.LeftShift)) // Check if the left shift key is pressed for running
+        {
+            controller.Move(move * RunSpeed * Time.deltaTime); // Move at running speed
+        }
+        else
+        {
+            controller.Move(move * speed * Time.deltaTime); // Move at normal speed
         }
 
         velocity.y += gravity * Time.deltaTime; //applying gravity
