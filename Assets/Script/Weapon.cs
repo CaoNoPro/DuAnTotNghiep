@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    
+    public bool isActiveWeapon;
 
     public bool isShooting, readyToShoot;
     bool allowReset = true;
@@ -29,6 +29,9 @@ public class Weapon : MonoBehaviour
     public float reloadTime;
     public float magazineSize, bulletLeft;
     public bool isReloading;
+
+    public Vector3 spawnPosition;
+    public Vector3 spawnRotation;
 
     public enum WeaponModel
     {
@@ -58,39 +61,42 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(bulletLeft == 0 && isShooting)
+        if (isActiveWeapon)
         {
-            SoundManager.Instance.EmptyMag1911.Play(); // Play empty magazine sound if no bullets left and shooting is attempted
+            if (bulletLeft == 0 && isShooting)
+            {
+                SoundManager.Instance.EmptyMag1911.Play(); // Play empty magazine sound if no bullets left and shooting is attempted
 
-        }
-        if (shootingMode == ShootingMode.Auto)
-        {
-            isShooting =Input.GetKey(KeyCode.Mouse0); // Check if the left mouse button is pressed for automatic shooting
-        }
-        else if (shootingMode == ShootingMode.Burst||shootingMode == ShootingMode.Single)
-        {
-            isShooting = Input.GetKeyDown(KeyCode.Mouse0); // Check if the left mouse button is pressed for burst shooting
-        }
+            }
+            if (shootingMode == ShootingMode.Auto)
+            {
+                isShooting = Input.GetKey(KeyCode.Mouse0); // Check if the left mouse button is pressed for automatic shooting
+            }
+            else if (shootingMode == ShootingMode.Burst || shootingMode == ShootingMode.Single)
+            {
+                isShooting = Input.GetKeyDown(KeyCode.Mouse0); // Check if the left mouse button is pressed for burst shooting
+            }
 
-        if(Input.GetKeyDown(KeyCode.R) && bulletLeft < magazineSize && isReloading == false) // Check if the R key is pressed to reload
-        {
-            Reload(); // Call the Reload method
-        }
+            if (Input.GetKeyDown(KeyCode.R) && bulletLeft < magazineSize && isReloading == false) // Check if the R key is pressed to reload
+            {
+                Reload(); // Call the Reload method
+            }
 
-        if(readyToShoot && isShooting && bulletLeft <= 0 && isReloading == false) // Check if ready to shoot and no bullets left
-        {
-            Reload(); // Call the Reload method
-        }
+            if (readyToShoot && isShooting && bulletLeft <= 0 && isReloading == false) // Check if ready to shoot and no bullets left
+            {
+                Reload(); // Call the Reload method
+            }
 
-        if (readyToShoot && isShooting && bulletLeft > 0)
-        {
-            BurstBulletLeft = bulletPerBurst;
-            Shoot();
-        }
+            if (readyToShoot && isShooting && bulletLeft > 0)
+            {
+                BurstBulletLeft = bulletPerBurst;
+                Shoot();
+            }
 
-        if (AmmoManager.Instance.ammoDisplay != null) // Check if no bullets left and not reloading
-        {
-            AmmoManager.Instance.ammoDisplay.text = $"{bulletLeft/bulletPerBurst}/{magazineSize/bulletPerBurst}"; // Update the ammo display text with the number of bullets left
+            if (AmmoManager.Instance.ammoDisplay != null) // Check if no bullets left and not reloading
+            {
+                AmmoManager.Instance.ammoDisplay.text = $"{bulletLeft / bulletPerBurst}/{magazineSize / bulletPerBurst}"; // Update the ammo display text with the number of bullets left
+            }
         }
     }
 

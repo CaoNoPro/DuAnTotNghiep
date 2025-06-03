@@ -17,14 +17,13 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
+        if (Instance != null && Instance != this)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // Prevents the object from being destroyed on scene load
+            Destroy(gameObject); // Ensure only one instance exists
         }
         else
         {
-            Destroy(gameObject); // Ensures only one instance exists
+            Instance = this;
         }
     }
 
