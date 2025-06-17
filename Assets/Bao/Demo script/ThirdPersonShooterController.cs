@@ -62,24 +62,8 @@ public class ThirdPersonShooterController : MonoBehaviour
 
         if (starterAssetsInputs.Shoot)
         {
-            /*
-            // Hit Scan Shoot
-            if (hitTransform != null) {
-                // Hit something
-                if (hitTransform.GetComponent<BulletTarget>() != null) {
-                    // Hit target
-                    Instantiate(vfxHitGreen, mouseWorldPosition, Quaternion.identity);
-                } else {
-                    // Hit something else
-                    Instantiate(vfxHitRed, mouseWorldPosition, Quaternion.identity);
-                }
-            }
-            //*/
-            //*
-            // Projectile Shoot
             Vector3 aimDir = (mouseWorldPosition - spawnBulletPosition.position).normalized;
             Instantiate(pfBulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
-            //*/
             starterAssetsInputs.Shoot = false;
         }
     }
