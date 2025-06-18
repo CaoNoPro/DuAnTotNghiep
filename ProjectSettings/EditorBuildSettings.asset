@@ -6,8 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Full Scene/Main Menu.unity
+    guid: b9051a9c5cdbb334e9aa12d15ba7bae5
+  - enabled: 1
+    path: Assets/Full Scene/Nha.unity
+    guid: 458989764dec3a14b895ad281818bfe4
+  - enabled: 1
+    path: Assets/Full Scene/CIty new.unity
+    guid: 7be11c79743bb3640893fed4597056ed
+  - enabled: 1
+    path: Assets/Full Scene/LAB snow.unity
+    guid: 48e0c5fc4eddb1942a0ad1dfb7c11fbe
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
