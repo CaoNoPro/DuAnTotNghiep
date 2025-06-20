@@ -35,7 +35,7 @@ public class ThirdPersonShooterController : MonoBehaviour
         Transform hitTransform = null;
         if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
         {
-            debugTransform.position = raycastHit.point;
+            //debugTransform.position = raycastHit.point;
             mouseWorldPosition = raycastHit.point;
             hitTransform = raycastHit.transform;
         }
@@ -66,5 +66,6 @@ public class ThirdPersonShooterController : MonoBehaviour
             Instantiate(pfBulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
             starterAssetsInputs.Shoot = false;
         }
+        
     }
 }
