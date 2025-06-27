@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class WeaponManager : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class WeaponManager : MonoBehaviour
     public GameObject[] weapons; // Danh sách các súng
     public GameObject bulletPrefab; // Prefab của đạn
     public Transform bulletSpawnPoint; // Điểm xuất phát của đạn
+    public TextMeshProUGUI ammo; 
 
     [Header("Weapon Settings")]
     public int[] maxAmmoCounts; // Số đạn tối đa cho mỗi súng
@@ -23,6 +25,7 @@ public class WeaponManager : MonoBehaviour
             weapons[i].SetActive(i == currentWeaponIndex);
             ammoCounts[i] = maxAmmoCounts[i]; // Khởi tạo số đạn cho mỗi súng
         }
+        Updateammo();
     }
 
     private void Update()
@@ -80,6 +83,9 @@ public class WeaponManager : MonoBehaviour
         // Gọi hoạt ảnh đổi súng
         animator.SetTrigger("SwitchWeapon");
 
+        // Cập nhật số đạn khi chuyển súng
+        Updateammo();
+
         // Thêm dòng log để kiểm tra
         Debug.Log("Switched to weapon: " + currentWeaponIndex);
     }
@@ -90,6 +96,7 @@ public class WeaponManager : MonoBehaviour
         animator.SetTrigger("Reload");
         ammoCounts[currentWeaponIndex] = maxAmmoCounts[currentWeaponIndex]; // Nạp đầy đạn cho súng hiện tại
         Debug.Log("Reloading... Current ammo: " + ammoCounts[currentWeaponIndex]);
+        Updateammo(); // Cập nhật số đạn sau khi nạp
     }
 
     private void Shoot()
@@ -107,10 +114,20 @@ public class WeaponManager : MonoBehaviour
             // Giảm số đạn
             ammoCounts[currentWeaponIndex]--;
             Debug.Log("Shooting bullet... Remaining ammo: " + ammoCounts[currentWeaponIndex]);
+            Updateammo(); // Cập nhật số đạn sau khi bắn
         }
         else
         {
             Debug.Log("Out of ammo! Reload to continue.");
+        }
+    }
+
+    private void Updateammo()
+    {
+        if (ammo != null)
+        {
+            // Cập nhật số đạn hiện tại cho súng đang được chọn
+            ammo.text = $"{ammoCounts[currentWeaponIndex]} / {maxAmmoCounts[currentWeaponIndex]}";
         }
     }
 }
