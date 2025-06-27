@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
@@ -8,6 +8,11 @@ public class EnemyController : MonoBehaviour
 
     private Transform targetPlayer;
     private NavMeshAgent agent;
+
+    public int AttackDamage = 10; // Sát thương khi tấn công
+    public float AttackCooldown = 1f; // Thời gian hồi chiêu giữa các đòn tấn công
+    private float lastAttackTime = 0f;
+
 
     void Start()
     {
@@ -51,7 +56,7 @@ public class EnemyController : MonoBehaviour
 
         float distance = Vector3.Distance(transform.position, targetPlayer.position);
 
-        // Xoay m?t v? ph�a player
+        // Xoay m?t v? phía player
         Vector3 directionToPlayer = (targetPlayer.position - transform.position).normalized;
         directionToPlayer.y = 0f;
 
@@ -66,7 +71,7 @@ public class EnemyController : MonoBehaviour
             agent.isStopped = true;
             animator.SetBool("isMoving", false);
             animator.SetBool("isAttacking", true);
-            // TODO: th�m logic g�y s�t th??ng n?u mu?n
+            // TODO: thêm logic gây sát th??ng n?u mu?n
         }
         else
         {
@@ -76,4 +81,40 @@ public class EnemyController : MonoBehaviour
             animator.SetBool("isMoving", true);
         }
     }
-}
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if (Time.time >= lastAttackTime + AttackCooldown)
+            {
+                PlayerVitural player = collision.gameObject.GetComponent<PlayerVitural>();
+                if (player != null)
+                {
+                    player.TakeDamage(AttackDamage); // Giảm máu của người chơi
+                    lastAttackTime = Time.time; // Cập nhật thời gian tấn công cuối cùng
+                }
+                else
+                {
+                    Debug.LogWarning("PlayerVitural component not found on the player object.");
+                }
+
+            }
+        }else
+        {
+            Debug.Log("Collision with non-player object: " + collision.gameObject.tag);
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            PlayerVitural player = other.GetComponent<PlayerVitural>();
+            if (player != null && Time.time >= lastAttackTime + AttackCooldown)
+            {
+                player.TakeDamage(AttackDamage);
+                lastAttackTime = Time.time;
+            }
+        }
+    }
+} 
