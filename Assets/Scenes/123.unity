@@ -730,7 +730,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4289272884854928001, guid: 4a640af60c02dea41ab2f547955527db, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5368869121714768067, guid: 4a640af60c02dea41ab2f547955527db, type: 3}
       propertyPath: m_Name
@@ -998,11 +998,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afc27492cf048243b4502dc946bd9e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 10
   runSpeed: 8
   jumpForce: 5
   gravity: -9.81
-  rotationSpeed: 10
+  rotationSpeed: 3
   groundCheck: {fileID: 522784328}
   groundDistance: 0.4
   groundMask:

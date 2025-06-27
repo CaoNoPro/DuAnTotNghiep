@@ -22,6 +22,9 @@ public class PlayerVitural : MonoBehaviour
     private int StaminaRegainRate;
     public int StaminaRegainMult;
 
+    private CharacterController characterController;
+
+
     private void Start()
     {
         HealthSlider.maxValue = maxHealth;
