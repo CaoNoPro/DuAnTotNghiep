@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 9058122239118027071}
   - component: {fileID: 7939778198522329314}
   - component: {fileID: 3814270251059588838}
+  - component: {fileID: 3903636466379740958}
   m_Layer: 8
   m_Name: player
   m_TagString: Untagged
@@ -62,7 +63,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2644826051298233377}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.2157774, y: 1.01, z: 0.9234061}
   m_LocalScale: {x: 0.5, y: 1, z: 0.5}
   m_ConstrainProportionsScale: 0
@@ -227,6 +228,31 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3903636466379740958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2644826051298233377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38598f6fe6709214cb335277b0ab64e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthSlider: {fileID: 0}
+  maxHealth: 100
+  healFallRate: 5
+  ThirstSlider: {fileID: 0}
+  maxThirst: 100
+  thirstFallRate: 5
+  HungerSlider: {fileID: 0}
+  maxHunger: 100
+  hungerFallRate: 5
+  StaminaSlider: {fileID: 0}
+  maxStamina: 100
+  staminaFallMult: 0
+  StaminaRegainMult: 0
 --- !u!1 &5543168556742555195
 GameObject:
   m_ObjectHideFlags: 0
