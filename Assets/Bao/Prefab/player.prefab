@@ -44,9 +44,11 @@ GameObject:
   - component: {fileID: 2633559074339159346}
   - component: {fileID: 2595827384006264251}
   - component: {fileID: 7450754751118770251}
-  - component: {fileID: 9058122239118027071}
   - component: {fileID: 7939778198522329314}
   - component: {fileID: 3814270251059588838}
+  - component: {fileID: 421214505749040122}
+  - component: {fileID: 4255398331084189569}
+  - component: {fileID: 2930942357495477375}
   m_Layer: 8
   m_Name: player
   m_TagString: Untagged
@@ -62,7 +64,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2644826051298233377}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.2157774, y: 1.01, z: 0.9234061}
   m_LocalScale: {x: 0.5, y: 1, z: 0.5}
   m_ConstrainProportionsScale: 0
@@ -147,34 +149,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &9058122239118027071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2644826051298233377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b6da8265a2febb46888cbf9fbdd55e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkSpeed: 5
-  runSpeed: 10
-  jumpForce: 8
-  gravity: -9.8
-  mouseSensitivity: 100
-  playerBody: {fileID: 6742791994630010238}
-  fpsCam: {fileID: 4971635181186534801}
-  damage: 10
-  range: 100
-  fireRate: 0.5
-  currentWeaponModel: {fileID: 7462946758624732691}
-  normalFOV: 60
-  aimFOV: 40
-  aimSpeed: 8
-  normalSensitivityMultiplier: 1
-  aimSensitivityMultiplier: 0.5
 --- !u!54 &7939778198522329314
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -227,6 +201,65 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &421214505749040122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2644826051298233377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce61804f1bee2d043b9ba8d2930df7af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 200
+  mouseSensitivity: 2
+  characterBody: {fileID: 0}
+  playerCamera: {fileID: 0}
+--- !u!114 &4255398331084189569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2644826051298233377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6afc27492cf048243b4502dc946bd9e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 10
+  runSpeed: 8
+  jumpForce: 5
+  gravity: -9.81
+  rotationSpeed: 3
+  groundCheck: {fileID: 0}
+  groundDistance: 0.4
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
+  cameraTransform: {fileID: 0}
+--- !u!114 &2930942357495477375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2644826051298233377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48834dfff3f0ec94bb2cb3916ad44d47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  weapons:
+  - {fileID: 5368869121714768067, guid: 4a640af60c02dea41ab2f547955527db, type: 3}
+  - {fileID: 8115127139998362243, guid: d143491b221a99647896b520f48b5372, type: 3}
+  - {fileID: 647499141696943476, guid: 91ae9411a4d02cf41964a3f538884b64, type: 3}
+  bulletPrefab: {fileID: 7335362318138165066, guid: 620e29698bb293b4d918a530f3dfc234, type: 3}
+  bulletSpawnPoint: {fileID: 0}
+  maxAmmoCounts: 050000001e00000023000000
 --- !u!1 &5543168556742555195
 GameObject:
   m_ObjectHideFlags: 0
