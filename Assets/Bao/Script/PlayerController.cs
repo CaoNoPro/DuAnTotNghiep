@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
+    public Animator animator;
     public PlayerVirtual playerVirtual; // Kéo PlayerVirtual vào đây trong Inspector    
     [Header("Movement System")]
     public float walkSpeed = 5f;
@@ -71,6 +72,16 @@ public class PlayerController : MonoBehaviour
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Giới hạn góc nhìn lên/xuống
+
+        //Tính toán tốc độ ngang thực tế của người chơi
+        float currentHorizontalSpeed = new Vector3(controller.velocity.x, 0, controller.velocity.z).magnitude;
+
+        //cập nhật tham số animator
+        if(animator != null)
+        {
+            animator.SetFloat("Speed", currentHorizontalSpeed);
+            animator.SetBool("isSprinting", isSprinting);
+        }
 
         // Áp dụng xoay dọc cho chính camera (GameObject mà script này đang gắn vào, vì camera là con của Player)
         // Nếu script này gắn vào Player và camera là con của Player, thì transform.localRotation của camera
