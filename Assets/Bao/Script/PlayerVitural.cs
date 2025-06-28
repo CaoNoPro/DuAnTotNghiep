@@ -22,6 +22,12 @@ public class PlayerVitural : MonoBehaviour
     private int StaminaRegainRate;
     public int StaminaRegainMult;
 
+    public bool isdead = false;
+    public GameObject GameOverUI;
+
+    private CharacterController characterController;
+
+
     private void Start()
     {
         HealthSlider.maxValue = maxHealth;
@@ -38,10 +44,16 @@ public class PlayerVitural : MonoBehaviour
 
         staminaFallRate = 1; // Set the rate at which stamina falls
         StaminaRegainRate = 1; // Set the rate at which stamina regains
+
+        if (GameOverUI != null)
+        {
+            GameOverUI.SetActive(false);
+        }
     }
     private void Update()
     {
-        if(HungerSlider.value <= 0 && (ThirstSlider.value <= 0))
+        if (isdead) return;
+        if (HungerSlider.value <= 0 && (ThirstSlider.value <= 0))
         {
             HealthSlider.value -= Time.deltaTime / healFallRate * 2;
         }
@@ -53,7 +65,7 @@ public class PlayerVitural : MonoBehaviour
         {
             HealthSlider.value += Time.deltaTime / healFallRate;
         }
-        
+
         if (HealthSlider.value <= 0)
         {
             CharacterDead();
@@ -65,12 +77,12 @@ public class PlayerVitural : MonoBehaviour
             HungerSlider.value -= Time.deltaTime / hungerFallRate;
         }
 
-        else if(HungerSlider.value <= 0)
+        else if (HungerSlider.value <= 0)
         {
             HungerSlider.value = 0;
         }
 
-        else if(HungerSlider.value >= maxHunger)
+        else if (HungerSlider.value >= maxHunger)
         {
             HungerSlider.value = maxHunger;
         }
@@ -88,11 +100,38 @@ public class PlayerVitural : MonoBehaviour
         {
             ThirstSlider.value = maxThirst;
         }
-
-        
     }
+        // Lost Health By Enemy
+
+        public void TakeDamage(int DamageAmmount)
+    {
+        HealthSlider.value -= DamageAmmount;
+        Debug.Log("Player took damage: " + DamageAmmount + ", Current Health: " + HealthSlider.value);
+        if (HealthSlider.value <= 0&& !isdead)
+        {
+            CharacterDead();
+            
+        }
+    }
+
+    
     public void CharacterDead()
     {
-        //
-    }
+        Debug.Log("Player is dead!");
+        isdead = true;
+        Collider[] colliders = GetComponents<Collider>();
+        foreach (Collider collider in colliders)
+        {
+            collider.enabled = false; // Disable all colliders
+        }
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true; // Make the Rigidbody kinematic to stop physics interactions
+        }
+        if (GameOverUI != null)
+        {
+            GameOverUI.SetActive(true); // Show the Game Over UI
+        }
+    }   
 }
