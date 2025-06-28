@@ -88,7 +88,7 @@ public class EnemyController : MonoBehaviour
         {
             if (Time.time >= lastAttackTime + AttackCooldown)
             {
-                PlayerVitural player = collision.gameObject.GetComponent<PlayerVitural>();
+                PlayerVirtual player = collision.gameObject.GetComponent<PlayerVirtual>();
                 if (player != null)
                 {
                     player.TakeDamage(AttackDamage); // Giảm máu của người chơi
@@ -109,7 +109,7 @@ public class EnemyController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerVitural player = other.GetComponent<PlayerVitural>();
+            PlayerVirtual player = other.GetComponent<PlayerVirtual>();
             if (player != null && Time.time >= lastAttackTime + AttackCooldown)
             {
                 player.TakeDamage(AttackDamage);

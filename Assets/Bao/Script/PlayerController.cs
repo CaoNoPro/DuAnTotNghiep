@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
+    public PlayerVirtual playerVirtual; // Kéo PlayerVirtual vào đây trong Inspector    
     [Header("Movement System")]
     public float walkSpeed = 5f;
     public float runSpeed = 10f;
@@ -94,7 +95,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Chạy
-        if (Input.GetKey(KeyCode.LeftShift) && (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0))
+        if (Input.GetKey(KeyCode.LeftShift) && (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && playerVirtual.StaminaSlider.value > 0)
         {
             isSprinting = true;
             currentSpeed = runSpeed;
@@ -152,11 +153,11 @@ public class PlayerController : MonoBehaviour
             // --- Áp dụng sát thương (nếu có hệ thống máu kẻ địch) ---
             // Bạn có thể thêm code để gây sát thương cho kẻ địch ở đây
             // Ví dụ:
-            // EnemyHealth enemyHealth = hit.transform.GetComponent<EnemyHealth>();
-            // if (enemyHealth != null)
-            // {
-            //     enemyHealth.TakeDamage(damage);
-            // }
+            EnemyHealth enemyHealth = hit.transform.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(damage);
+            }
 
             // --- Hiển thị hiệu ứng va chạm (vết đạn, tia lửa) ---
             // Ví dụ: Instantiate(impactEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal));
