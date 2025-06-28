@@ -25,6 +25,8 @@ public class PlayerVitural : MonoBehaviour
     public bool isdead = false;
     public GameObject GameOverUI;
 
+
+
     private CharacterController characterController;
 
 
@@ -52,6 +54,7 @@ public class PlayerVitural : MonoBehaviour
     }
     private void Update()
     {
+
         if (isdead) return;
         if (HungerSlider.value <= 0 && (ThirstSlider.value <= 0))
         {
@@ -133,5 +136,18 @@ public class PlayerVitural : MonoBehaviour
         {
             GameOverUI.SetActive(true); // Show the Game Over UI
         }
-    }   
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Boss"))
+        {
+            BossHealth boss = other.GetComponent<BossHealth>();
+            if (boss != null)
+            {
+                boss.TakeDamage(20); // Gây 20 damage
+            }
+        }
+    }
+
 }

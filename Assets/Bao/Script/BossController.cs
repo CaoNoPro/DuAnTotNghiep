@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 
@@ -11,6 +11,10 @@ public class BossController : MonoBehaviour
 
     public float attackRange = 2f;
     public float moveSpeed = 3.5f;
+
+    public int attackDamage = 10;              // 👈 Gây sát thương
+    public float attackCooldown = 2f;          // 👈 Thời gian hồi chiêu
+    private float lastAttackTime;              // 👈 Theo dõi lần tấn công cuối
 
     private Transform targetPlayer;
     private NavMeshAgent agent;
@@ -72,6 +76,18 @@ public class BossController : MonoBehaviour
             animator.SetBool("isMoving", false);
             agent.isStopped = true;
             animator.SetBool("isAttacking", true);
+
+            // Gây sát thương nếu đến lúc được phép tấn công
+            if (Time.time >= lastAttackTime + attackCooldown)
+            {
+                lastAttackTime = Time.time;
+
+                PlayerVitural player = targetPlayer.GetComponent<PlayerVitural>();
+                if (player != null && !player.isdead)
+                {
+                    player.TakeDamage(attackDamage);
+                }
+            }
         }
         else
         {
@@ -102,10 +118,10 @@ public class BossController : MonoBehaviour
         if (jumpExplosionVFX != null)
         {
             GameObject vfx = Instantiate(jumpExplosionVFX, vfxSpawnPoint.position, Quaternion.identity);
-            Destroy(vfx, 2f); // Auto destroy VFX after 2 seconds
+            Destroy(vfx, 2f);
         }
 
-        yield return new WaitForSeconds(1.0f); // finish jump anim
+        yield return new WaitForSeconds(1.0f);
         isJumping = false;
         agent.isStopped = false;
     }
@@ -128,7 +144,7 @@ public class BossController : MonoBehaviour
         if (rageVFX != null)
         {
             GameObject vfx = Instantiate(rageVFX, vfxSpawnPoint.position, Quaternion.identity);
-            Destroy(vfx, 7f); // Auto destroy VFX after 3 seconds
+            Destroy(vfx, 7f);
         }
 
         yield return new WaitForSeconds(3f);
@@ -137,3 +153,4 @@ public class BossController : MonoBehaviour
         agent.isStopped = false;
     }
 }
+

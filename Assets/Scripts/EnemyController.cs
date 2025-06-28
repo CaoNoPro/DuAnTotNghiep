@@ -5,24 +5,57 @@ public class EnemyController : MonoBehaviour
 {
     public Animator animator;
     public float attackRange = 2f;
+    public int AttackDamage = 10;
+    public float AttackCooldown = 1f;
+    public float MaxHealth = 100f;
 
+    public GameObject deathEffectPrefab;
+
+    private float currentHealth;
+    private float lastAttackTime = 0f;
     private Transform targetPlayer;
     private NavMeshAgent agent;
-
-    public int AttackDamage = 10; // Sát thương khi tấn công
-    public float AttackCooldown = 1f; // Thời gian hồi chiêu giữa các đòn tấn công
-    private float lastAttackTime = 0f;
-
+    private EnemySpawner spawner;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        currentHealth = MaxHealth;
     }
 
     void Update()
     {
         FindNearestPlayer();
         HandleMovementAndAttack();
+    }
+
+    public void SetSpawner(EnemySpawner s)
+    {
+        spawner = s;
+    }
+
+    public void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
+        if (currentHealth <= 0f)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        animator.SetTrigger("die");
+
+        if (deathEffectPrefab)
+            Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
+
+        if (spawner != null)
+        {
+            spawner.RespawnAfterDelay(5f); // KHÔNG truyền position nữa
+        }
+
+        Destroy(gameObject);
     }
 
     void FindNearestPlayer()
@@ -56,14 +89,13 @@ public class EnemyController : MonoBehaviour
 
         float distance = Vector3.Distance(transform.position, targetPlayer.position);
 
-        // Xoay m?t v? phía player
         Vector3 directionToPlayer = (targetPlayer.position - transform.position).normalized;
         directionToPlayer.y = 0f;
 
         if (directionToPlayer != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
-            transform.rotation = targetRotation * Quaternion.Euler(0f, 180f, 0f); // Xoay n?u model quay ng??c
+            transform.rotation = targetRotation * Quaternion.Euler(0f, 180f, 0f);
         }
 
         if (distance <= attackRange)
@@ -71,7 +103,6 @@ public class EnemyController : MonoBehaviour
             agent.isStopped = true;
             animator.SetBool("isMoving", false);
             animator.SetBool("isAttacking", true);
-            // TODO: thêm logic gây sát th??ng n?u mu?n
         }
         else
         {
@@ -84,37 +115,28 @@ public class EnemyController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && Time.time >= lastAttackTime + AttackCooldown)
         {
-            if (Time.time >= lastAttackTime + AttackCooldown)
-            {
-                PlayerVitural player = collision.gameObject.GetComponent<PlayerVitural>();
-                if (player != null)
-                {
-                    player.TakeDamage(AttackDamage); // Giảm máu của người chơi
-                    lastAttackTime = Time.time; // Cập nhật thời gian tấn công cuối cùng
-                }
-                else
-                {
-                    Debug.LogWarning("PlayerVitural component not found on the player object.");
-                }
-
-            }
-        }else
-        {
-            Debug.Log("Collision with non-player object: " + collision.gameObject.tag);
-        }
-    }
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            PlayerVitural player = other.GetComponent<PlayerVitural>();
-            if (player != null && Time.time >= lastAttackTime + AttackCooldown)
+            PlayerVitural player = collision.gameObject.GetComponent<PlayerVitural>();
+            if (player != null)
             {
                 player.TakeDamage(AttackDamage);
                 lastAttackTime = Time.time;
             }
         }
     }
-} 
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player") && Time.time >= lastAttackTime + AttackCooldown)
+        {
+            PlayerVitural player = other.GetComponent<PlayerVitural>();
+            if (player != null)
+            {
+                player.TakeDamage(AttackDamage);
+                lastAttackTime = Time.time;
+            }
+        }
+    }
+}
+
