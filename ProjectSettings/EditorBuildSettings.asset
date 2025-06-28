@@ -15,6 +15,18 @@ EditorBuildSettings:
     path: Assets/Full Scene/LAB snow.unity
     guid: 48e0c5fc4eddb1942a0ad1dfb7c11fbe
   - enabled: 1
+    path: Assets/Full Scene/Mini map 1.unity
+    guid: 4b500e0411e368442a0490340b55f3e6
+  - enabled: 1
+    path: Assets/Full Scene/Mini map 2.unity
+    guid: c20764a7e4a561641a1bfaa13f3088b1
+  - enabled: 1
+    path: Assets/Full Scene/Mini map 3.unity
+    guid: 18fdb7c38e2d1bb48ab2a2ebbf8dd5df
+  - enabled: 1
+    path: Assets/Full Scene/Mini map 4.unity
+    guid: d794d264e9a1aa141a9d5180f5dc6671
+  - enabled: 1
     path: Assets/Full Scene/CIty new 2.unity
     guid: 7be11c79743bb3640893fed4597056ed
   m_configObjects:
