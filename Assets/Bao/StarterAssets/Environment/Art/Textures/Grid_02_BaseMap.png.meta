@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9e97bfa3917bce44dabed7042eeae17b
+guid: d9c0dd5cdac07b145be73329e489869a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -132,9 +132,8 @@ TextureImporter:
   assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
-  productId: 196526
-  packageName: Starter Assets - ThirdPerson | Updates in new CharacterController
-    package
-  packageVersion: 1.1.5
-  assetPath: Assets/StarterAssets/Environment/Art/Textures/Grid_02_BaseMap.png
-  uploadId: 691128
+  productId: 181470
+  packageName: Survivalist character
+  packageVersion: 1.2
+  assetPath: Assets/Bao/StarterAssets/Environment/Art/Textures/Grid_02_BaseMap.png
+  uploadId: 762486
