@@ -1114,10 +1114,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5538719842862661313, guid: d5620541f16d57f458257d2407d7d407, type: 3}
-      propertyPath: isDead
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6141801731581345666, guid: d5620541f16d57f458257d2407d7d407, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1182,82 +1178,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9061394912838299594, guid: d5620541f16d57f458257d2407d7d407, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 738
-      objectReference: {fileID: 0}
-    - target: {fileID: 9061394912838299594, guid: d5620541f16d57f458257d2407d7d407, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -454.50598
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2644826051298233377, guid: d5620541f16d57f458257d2407d7d407, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 335771832}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5620541f16d57f458257d2407d7d407, type: 3}
---- !u!1 &335771827 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2644826051298233377, guid: d5620541f16d57f458257d2407d7d407, type: 3}
-  m_PrefabInstance: {fileID: 335771826}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &335771828 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1692167778434378660, guid: d5620541f16d57f458257d2407d7d407, type: 3}
-  m_PrefabInstance: {fileID: 335771826}
-  m_PrefabAsset: {fileID: 0}
---- !u!20 &335771829 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 4971635181186534801, guid: d5620541f16d57f458257d2407d7d407, type: 3}
-  m_PrefabInstance: {fileID: 335771826}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &335771830 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5538719842862661313, guid: d5620541f16d57f458257d2407d7d407, type: 3}
-  m_PrefabInstance: {fileID: 335771826}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 335771827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38598f6fe6709214cb335277b0ab64e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &335771831 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6742791994630010238, guid: d5620541f16d57f458257d2407d7d407, type: 3}
-  m_PrefabInstance: {fileID: 335771826}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &335771832
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 335771827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b6da8265a2febb46888cbf9fbdd55e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerVirtual: {fileID: 335771830}
-  walkSpeed: 5
-  runSpeed: 10
-  jumpForce: 8
-  gravity: -9.8
-  mouseSensitivity: 100
-  playerBody: {fileID: 335771831}
-  fpsCam: {fileID: 335771829}
-  damage: 10
-  range: 100
-  fireRate: 0.5
-  currentWeaponModel: {fileID: 335771828}
-  normalFOV: 60
-  aimFOV: 40
-  aimSpeed: 8
-  normalSensitivityMultiplier: 1
-  aimSensitivityMultiplier: 0.5
 --- !u!4 &338000695 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1113101456856104387, guid: 90094275eb30b6a4c90ee3e00607256b, type: 3}
