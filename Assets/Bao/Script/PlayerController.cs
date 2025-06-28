@@ -156,7 +156,7 @@ public class PlayerController : MonoBehaviour
             EnemyHealth enemyHealth = hit.transform.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
-                enemyHealth.TakeDamage((int) damage);
+                enemyHealth.TakeDamage((int)damage);
             }
 
             // --- Hiển thị hiệu ứng va chạm (vết đạn, tia lửa) ---
