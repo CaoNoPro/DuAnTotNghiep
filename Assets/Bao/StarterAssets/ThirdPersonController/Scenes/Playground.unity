@@ -1786,7 +1786,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1536230434283146379, guid: 90094275eb30b6a4c90ee3e00607256b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1536230434283146379, guid: 90094275eb30b6a4c90ee3e00607256b, type: 3}
       propertyPath: m_TagString
@@ -1794,11 +1794,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8215730859629163638, guid: 90094275eb30b6a4c90ee3e00607256b, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8215730859629163638, guid: 90094275eb30b6a4c90ee3e00607256b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7780523596267283910, guid: 90094275eb30b6a4c90ee3e00607256b, type: 3}
@@ -3225,15 +3225,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1125270977353546030, guid: 9b2bdee9bd3a182428b64fdbc2eca4cd, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1125270977353546030, guid: 9b2bdee9bd3a182428b64fdbc2eca4cd, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6129444870604822630, guid: 9b2bdee9bd3a182428b64fdbc2eca4cd, type: 3}
       propertyPath: m_Name
       value: Spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 6129444870604822630, guid: 9b2bdee9bd3a182428b64fdbc2eca4cd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
