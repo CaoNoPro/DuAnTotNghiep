@@ -4,36 +4,30 @@ using UnityEngine.UI; // Make sure to include this for UI elements
 
 public class EnemyHealth : MonoBehaviour
 {
-    public int maxHealth = 100;
-    private int currentHealth;
+    public float health = 100f;
+
+    public float currentHealth;
+    
 
     [Header("UI References")]
     public Slider healthSlider; // Kéo Slider UI vào đây trong Inspector
 
     void Start()
     {
-        currentHealth = maxHealth;
+        currentHealth = health;
 
         // Initialize the health slider
         if (healthSlider != null)
         {
-            healthSlider.maxValue = maxHealth;
+            healthSlider.maxValue = health;
             healthSlider.value = currentHealth;
         }
     }
 
-    public void TakeDamage(int damageAmount)
+    public void TakeDamage(float amount)
     {
-        currentHealth -= damageAmount;
-        Debug.Log(gameObject.name + " took " + damageAmount + " damage. Current Health: " + currentHealth);
-
-        // Update the health slider whenever damage is taken
-        if (healthSlider != null)
-        {
-            healthSlider.value = currentHealth;
-        }
-
-        if (currentHealth <= 0)
+        health -= amount;
+        if (health <= 0f)
         {
             Die();
         }
