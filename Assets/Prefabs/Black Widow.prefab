@@ -2855,6 +2855,7 @@ GameObject:
   - component: {fileID: 3183315029450816746}
   - component: {fileID: 5440474773795716422}
   - component: {fileID: 1563849464517830927}
+  - component: {fileID: 955504522071162430}
   m_Layer: 0
   m_Name: Black Widow
   m_TagString: Enemy
@@ -2945,12 +2946,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.581336, y: 2.109176, z: 2.2207365}
+  m_Center: {x: 0.1102767, y: 0.55458796, z: 0.1544795}
 --- !u!114 &5440474773795716422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2994,6 +2995,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &955504522071162430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6129444870604822630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec9378777c5ea042a9ee33b4661e08d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  healthSlider: {fileID: 5643707199127670258}
 --- !u!1 &6293680242719027220
 GameObject:
   m_ObjectHideFlags: 0
