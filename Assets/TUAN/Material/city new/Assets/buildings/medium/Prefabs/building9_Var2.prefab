@@ -587,6 +587,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8417028981761379174, guid: 05105e38d3295164e85a45224def1754, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6463522943716616169, guid: 05105e38d3295164e85a45224def1754, type: 3}
       propertyPath: m_Name
       value: building9_Var2
