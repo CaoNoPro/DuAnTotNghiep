@@ -103,23 +103,23 @@ public class WeaponManager : MonoBehaviour
     {
         // Kiểm tra xem có đủ đạn để bắn không
         if (ammoCounts[currentWeaponIndex] > 0)
-        {
-            // Tạo đạn
-            GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-            
-            // Thêm lực cho đạn
-            Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-            bulletRb.AddForce(bulletSpawnPoint.forward * 20f, ForceMode.Impulse); // Điều chỉnh lực theo nhu cầu
-            
-            // Giảm số đạn
-            ammoCounts[currentWeaponIndex]--;
-            Debug.Log("Shooting bullet... Remaining ammo: " + ammoCounts[currentWeaponIndex]);
-            Updateammo(); // Cập nhật số đạn sau khi bắn
-        }
-        else
-        {
-            Debug.Log("Out of ammo! Reload to continue.");
-        }
+            {
+                // Tạo đạn
+                GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+
+                // Thêm lực cho đạn
+                Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+                bulletRb.AddForce(bulletSpawnPoint.forward * 20f, ForceMode.Impulse); // Điều chỉnh lực theo nhu cầu
+
+                // Giảm số đạn
+                ammoCounts[currentWeaponIndex]--;
+                Debug.Log("Shooting bullet... Remaining ammo: " + ammoCounts[currentWeaponIndex]);
+                Updateammo(); // Cập nhật số đạn sau khi bắn
+            }
+            else
+            {
+                Debug.Log("Out of ammo! Reload to continue.");
+            }
     }
 
     private void Updateammo()
