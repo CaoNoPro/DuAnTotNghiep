@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class PlayerController : MonoBehaviour
 {
     public Animator animator;
-    public PlayerVirtual playerVirtual; // Kéo PlayerVirtual vào đây trong Inspector    
+    public PlayerVirtual playerVirtual; // Kéo PlayerVirtual vào đây trong Inspector     
     [Header("Movement System")]
     public float walkSpeed = 5f;
     public float runSpeed = 10f;
@@ -48,24 +48,54 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 initialWeaponPosition; // Vị trí ban đầu của súng
 
+    // --- Start: Thêm vào cho Menu và Tạm dừng game ---
+    [Header("UI & Game State")]
+    public GameObject pauseMenuUI; // Kéo GameObject chứa UI menu tạm dừng vào đây trong Inspector
+    public static bool GameIsPaused = false; // Biến tĩnh để kiểm tra trạng thái tạm dừng
+    // --- End: Thêm vào cho Menu và Tạm dừng game ---
+
 
     private void Start()
     {
         controller = GetComponent<CharacterController>();
         currentSpeed = walkSpeed;
 
-        // --- Start: Thêm vào cho Rotation ---
         // Khóa con trỏ chuột vào giữa màn hình và ẩn đi khi bắt đầu game
         Cursor.lockState = CursorLockMode.Locked;
-        // --- End: Thêm vào cho Rotation ---
         if (currentWeaponModel != null)
         {
             initialWeaponPosition = currentWeaponModel.transform.localPosition;
+        }
+
+        // Đảm bảo menu tạm dừng bị tắt khi bắt đầu game
+        if (pauseMenuUI != null)
+        {
+            pauseMenuUI.SetActive(false);
         }
     }
 
     private void Update()
     {
+        // --- Start: Logic Menu và Tạm dừng game ---
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            if (GameIsPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
+        }
+
+        if (GameIsPaused)
+        {
+            return; // Ngừng xử lý các input khác khi game đang tạm dừng
+        }
+        // --- End: Logic Menu và Tạm dừng game ---
+
+
         // --- Start: Logic Xoay góc nhìn (Rotation) ---
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
@@ -77,23 +107,17 @@ public class PlayerController : MonoBehaviour
         float currentHorizontalSpeed = new Vector3(controller.velocity.x, 0, controller.velocity.z).magnitude;
 
         //cập nhật tham số animator
-        if(animator != null)
+        if (animator != null)
         {
             animator.SetFloat("Speed", currentHorizontalSpeed);
             animator.SetBool("isSprinting", isSprinting);
         }
 
-        // Áp dụng xoay dọc cho chính camera (GameObject mà script này đang gắn vào, vì camera là con của Player)
-        // Nếu script này gắn vào Player và camera là con của Player, thì transform.localRotation của camera
-        // sẽ được điều khiển. Nếu script này gắn vào Player và bạn muốn điều khiển camera con,
-        // bạn cần một tham chiếu đến camera con (như `fpsCam` dưới đây), và dùng `fpsCam.transform.localRotation`.
-        // Với cấu trúc hiện tại (script gắn vào Player, Camera là con của Player),
-        // bạn cần đảm bảo biến `fpsCam` được gán đúng trong Inspector.
         if (fpsCam != null) // Đảm bảo đã gán camera trong Inspector
         {
             fpsCam.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         }
-        
+
         // Xoay ngang toàn bộ Player (sử dụng playerBody)
         playerBody.Rotate(Vector3.up * mouseX);
         // --- End: Logic Xoay góc nhìn (Rotation) ---
@@ -164,15 +188,42 @@ public class PlayerController : MonoBehaviour
             // --- Áp dụng sát thương (nếu có hệ thống máu kẻ địch) ---
             // Bạn có thể thêm code để gây sát thương cho kẻ địch ở đây
             // Ví dụ:
-            EnemyHealth enemyHealth = hit.transform.GetComponent<EnemyHealth>();
-            if (enemyHealth != null)
-            {
-                enemyHealth.TakeDamage((int)damage);
-            }
+            // EnemyHealth enemyHealth = hit.transform.GetComponent<EnemyHealth>();
+            // if (enemyHealth != null)
+            // {
+            //     enemyHealth.TakeDamage((int)damage);
+            // }
 
             // --- Hiển thị hiệu ứng va chạm (vết đạn, tia lửa) ---
             // Ví dụ: Instantiate(impactEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal));
         }
     }
     // --- End: Hàm Shoot() cho Shooting ---
+
+    // --- Start: Thêm vào hàm Resume() và Pause() ---
+    public void Resume()
+    {
+        if (pauseMenuUI != null)
+        {
+            pauseMenuUI.SetActive(false); // Tắt UI menu
+        }
+        Time.timeScale = 1f; // Đặt lại tốc độ thời gian về bình thường
+        Cursor.lockState = CursorLockMode.Locked; // Khóa con trỏ chuột
+        Cursor.visible = false; // Ẩn con trỏ chuột
+        GameIsPaused = false; // Cập nhật trạng thái game
+
+    }
+
+    void Pause()
+    {
+        if (pauseMenuUI != null)
+        {
+            pauseMenuUI.SetActive(true); // Bật UI menu
+        }
+        Time.timeScale = 0f; // Dừng thời gian trong game
+        Cursor.lockState = CursorLockMode.None; // Mở khóa con trỏ chuột
+        Cursor.visible = true; // Hiển thị con trỏ chuột
+        GameIsPaused = true; // Cập nhật trạng thái game
+    }
+    // --- End: Thêm vào hàm Resume() và Pause() ---
 }
