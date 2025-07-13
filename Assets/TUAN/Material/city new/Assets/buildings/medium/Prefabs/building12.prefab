@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2382419788130265397}
   - component: {fileID: 8194106091867186306}
   - component: {fileID: 4640649139871763473}
+  - component: {fileID: 3037980280540923147}
   m_Layer: 0
   m_Name: building12
   m_TagString: Untagged
@@ -101,6 +102,27 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!65 &3037980280540923147
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678531993065446182}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8531591425659921231
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,6 +134,7 @@ GameObject:
   - component: {fileID: 8561986708873440323}
   - component: {fileID: 3637172169754265593}
   - component: {fileID: 5980210164410838987}
+  - component: {fileID: 3145743545252733390}
   m_Layer: 0
   m_Name: building18
   m_TagString: Untagged
@@ -187,3 +210,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3145743545252733390
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8531591425659921231}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 7, y: 35, z: 27}
+  m_Center: {x: 0, y: 17.5, z: 0}

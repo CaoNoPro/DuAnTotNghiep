@@ -9,6 +9,7 @@ TagManager:
   - CinemachineTarget
   - Ground
   - Enemy
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
