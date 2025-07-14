@@ -907,7 +907,7 @@ GameObject:
   - component: {fileID: 5538719842862661313}
   - component: {fileID: 2045039980815955607}
   - component: {fileID: 8420904780847152317}
-  - component: {fileID: 6615422862414100186}
+  - component: {fileID: 792749763080928610}
   m_Layer: 8
   m_Name: player
   m_TagString: Player
@@ -1134,7 +1134,7 @@ MonoBehaviour:
   aimSpeed: 8
   normalSensitivityMultiplier: 1
   aimSensitivityMultiplier: 0.5
---- !u!114 &6615422862414100186
+--- !u!114 &792749763080928610
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1143,27 +1143,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2644826051298233377}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b6da8265a2febb46888cbf9fbdd55e0, type: 3}
+  m_Script: {fileID: 11500000, guid: b881e914e9c0a7147a3a0ec205ca2abc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  playerVirtual: {fileID: 5538719842862661313}
-  walkSpeed: 5
-  runSpeed: 10
-  jumpForce: 8
-  gravity: -9.8
-  mouseSensitivity: 100
-  playerBody: {fileID: 6742791994630010238}
-  fpsCam: {fileID: 4971635181186534801}
-  damage: 10
-  range: 100
-  fireRate: 0.5
-  currentWeaponModel: {fileID: 1692167778434378660}
-  normalFOV: 60
-  aimFOV: 40
-  aimSpeed: 8
-  normalSensitivityMultiplier: 1
-  aimSensitivityMultiplier: 0.5
+  ShootingChannel: {fileID: 0}
+  Pistol1911Shoot: {fileID: 0}
+  M4A1Shoot: {fileID: 0}
+  ReloadMag1911: {fileID: 0}
+  ReloadMagM4A1: {fileID: 0}
+  EmptyMag1911: {fileID: 0}
 --- !u!1 &2736081229442311171
 GameObject:
   m_ObjectHideFlags: 0
