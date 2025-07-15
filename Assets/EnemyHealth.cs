@@ -1,4 +1,5 @@
 ﻿// EnemyHealth.cs
+using System;
 using UnityEngine;
 using UnityEngine.UI; // Make sure to include this for UI elements
 
@@ -33,7 +34,7 @@ public class EnemyHealth : MonoBehaviour
             healthSlider.value = currentHealth;
         }
 
-        if (currentHealth <= 0f)
+        if (currentHealth <= 0)
         {
             Die();
         }

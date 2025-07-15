@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8741059f64af0348aef9922b9f12ab0, type: 3}
   m_Name: Item
   m_EditorClassIdentifier: 
-  itemName: 
-  icon: {fileID: 0}
+  itemName: Chia khoa
+  icon: {fileID: -1725730209, guid: 312406056a926df4bbf4fb92a6b65979, type: 3}
   prefab: {fileID: 0}

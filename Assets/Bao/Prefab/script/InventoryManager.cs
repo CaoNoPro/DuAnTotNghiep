@@ -1,21 +1,26 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class InventoryManager : MonoBehaviour
 {
-    public GameObject inventoryPanel; // Tham chiếu đến Panel Inventory
+    public static InventoryManager Instance;
 
-    void Update()
+    private List<string> inventory = new List<string>();
+
+    void Awake()
     {
-        // Kiểm tra nếu phím "I" được nhấn
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            ToggleInventory();
-        }
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
 
-    void ToggleInventory()
+    public void AddItem(string itemName)
     {
-        // Đảo ngược trạng thái của InventoryPanel
-        inventoryPanel.SetActive(!inventoryPanel.activeSelf);
+        inventory.Add(itemName);
+        Debug.Log("Đã thêm vào kho: " + itemName);
+    }
+
+    public bool HasItem(string itemName)
+    {
+        return inventory.Contains(itemName);
     }
 }

@@ -2855,7 +2855,7 @@ GameObject:
   - component: {fileID: 3183315029450816746}
   - component: {fileID: 5440474773795716422}
   - component: {fileID: 1563849464517830927}
-  - component: {fileID: 955504522071162430}
+  - component: {fileID: 6486741069428659013}
   m_Layer: 0
   m_Name: Black Widow
   m_TagString: Enemy
@@ -2950,8 +2950,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.581336, y: 2.109176, z: 2.2207365}
-  m_Center: {x: 0.1102767, y: 0.55458796, z: 0.1544795}
+  m_Size: {x: 3.2458472, y: 2.2507071, z: 3.0294778}
+  m_Center: {x: 0.02334857, y: 0.62535334, z: 0.08045733}
 --- !u!114 &5440474773795716422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2995,7 +2995,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &955504522071162430
+--- !u!114 &6486741069428659013
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
