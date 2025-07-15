@@ -1,32 +1,39 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerVirtual : MonoBehaviour
 {
+    [Header("Vital Stats")]
     public Slider HealthSlider;
     public int maxHealth;
-    public float healFallRate; // Changed to float for Time.deltaTime division
+    public float healFallRate;
 
     public Slider ThirstSlider;
     public int maxThirst;
-    public float thirstFallRate; // Changed to float
+    public float thirstFallRate;
 
     public Slider HungerSlider;
     public int maxHunger;
-    public float hungerFallRate; // Changed to float
+    public float hungerFallRate;
 
     public Slider StaminaSlider;
     public int maxStamina;
-    public float staminaFallRatePerSecond = 10f; // Rate at which stamina falls per second when sprinting
-    public float staminaRegainRatePerSecond = 5f; // Rate at which stamina regains per second when not sprinting
+    public float staminaFallRatePerSecond = 10f;
+    public float staminaRegainRatePerSecond = 5f;
 
+    [Header("Game State")]
     public bool isDead = false;
     public GameObject GameOverUI;
 
-    private CharacterController characterController; // You declared this but didn't initialize or use it. If you have a CharacterController for movement, you'll need to link it and modify its speed.
+    [Header("Inventory")]
+    public GameObject inventoryPanel;
+    public InventorySlot[] inventorySlots;
+    private bool inventoryOpen = false;
 
     private void Start()
     {
+        // Setup stats
         HealthSlider.maxValue = maxHealth;
         HealthSlider.value = maxHealth;
 
@@ -39,134 +46,100 @@ public class PlayerVirtual : MonoBehaviour
         StaminaSlider.maxValue = maxStamina;
         StaminaSlider.value = maxStamina;
 
+        // Setup UI
         if (GameOverUI != null)
-        {
             GameOverUI.SetActive(false);
-        }
 
-        // It's good practice to get the CharacterController component if you're going to use it for player movement.
-        // characterController = GetComponent<CharacterController>();
+        if (inventoryPanel != null)
+            inventoryPanel.SetActive(false);
     }
 
     private void Update()
     {
         if (isDead) return;
 
-        // --- Health Regeneration/Degeneration ---
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            inventoryOpen = !inventoryOpen;
+            inventoryPanel.SetActive(inventoryOpen);
+
+            Cursor.lockState = inventoryOpen ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = inventoryOpen;
+            Time.timeScale = inventoryOpen ? 0f : 1f;
+        }
+
+        HandleVitals();
+        HandleStamina();
+    }
+
+    private void HandleVitals()
+    {
         if (HungerSlider.value <= 0 && ThirstSlider.value <= 0)
-        {
             HealthSlider.value -= Time.deltaTime / healFallRate * 2;
-        }
         else if (HungerSlider.value <= 0 || ThirstSlider.value <= 0)
-        {
             HealthSlider.value -= Time.deltaTime / healFallRate;
-        }
         else
         {
-            // Health slowly regenerates if hunger and thirst are not critical
             HealthSlider.value += Time.deltaTime / healFallRate;
-            // Clamp health to maxHealth
             HealthSlider.value = Mathf.Min(HealthSlider.value, maxHealth);
         }
 
         if (HealthSlider.value <= 0)
-        {
             CharacterDead();
-        }
 
-        // --- Hunger Controller ---
-        if (HungerSlider.value > 0)
-        {
-            HungerSlider.value -= Time.deltaTime / hungerFallRate;
-        }
-        else
-        {
-            HungerSlider.value = 0; // Ensure it doesn't go below zero
-        }
-        // Clamp hunger to maxHunger (useful if you have mechanics to increase hunger)
+        HungerSlider.value -= Time.deltaTime / hungerFallRate;
         HungerSlider.value = Mathf.Clamp(HungerSlider.value, 0, maxHunger);
 
-
-        // --- Thirst Controller ---
-        if (ThirstSlider.value > 0)
-        {
-            ThirstSlider.value -= Time.deltaTime / thirstFallRate;
-        }
-        else
-        {
-            ThirstSlider.value = 0; // Ensure it doesn't go below zero
-        }
-        // Clamp thirst to maxThirst
+        ThirstSlider.value -= Time.deltaTime / thirstFallRate;
         ThirstSlider.value = Mathf.Clamp(ThirstSlider.value, 0, maxThirst);
-
-        // --- Stamina Controller for Sprinting ---
-        HandleStamina();
     }
 
-    // --- Stamina Handling ---
     private void HandleStamina()
     {
-        // Check if the Shift key is held down and if there's stamina to sprint
         bool isSprinting = Input.GetKey(KeyCode.LeftShift) && StaminaSlider.value > 0;
 
         if (isSprinting)
-        {
-            // Decrease stamina when sprinting
             StaminaSlider.value -= staminaFallRatePerSecond * Time.deltaTime;
-            // You'll need to link this to your actual player movement script
-            // For example, if you have a `PlayerMovement` script, you would call a method like:
-            // PlayerMovement.instance.SetSprintState(true);
-        }
-        else
-        {
-            // Regenerate stamina when not sprinting and not at max stamina
-            if (StaminaSlider.value < maxStamina)
-            {
-                StaminaSlider.value += staminaRegainRatePerSecond * Time.deltaTime;
-            }
-            // You'll need to link this to your actual player movement script
-            // PlayerMovement.instance.SetSprintState(false);
-        }
+        else if (StaminaSlider.value < maxStamina)
+            StaminaSlider.value += staminaRegainRatePerSecond * Time.deltaTime;
 
-        // Clamp stamina to ensure it stays within min (0) and max bounds
         StaminaSlider.value = Mathf.Clamp(StaminaSlider.value, 0, maxStamina);
-
-        // Debugging to see stamina values
-        // Debug.Log("Current Stamina: " + StaminaSlider.value);
     }
 
-    // --- Lost Health By Enemy ---
-    public void TakeDamage(int DamageAmount)
+    public void TakeDamage(int damageAmount)
     {
-        HealthSlider.value -= DamageAmount;
-        Debug.Log("Player took damage: " + DamageAmount + ", Current Health: " + HealthSlider.value);
+        HealthSlider.value -= damageAmount;
         if (HealthSlider.value <= 0 && !isDead)
-        {
             CharacterDead();
-        }
     }
 
     public void CharacterDead()
     {
         Debug.Log("Player is dead!");
         isDead = true;
-        Collider[] colliders = GetComponents<Collider>();
-        foreach (Collider collider in colliders)
-        {
-            collider.enabled = false; // Disable all colliders
-        }
+
+        foreach (Collider col in GetComponents<Collider>())
+            col.enabled = false;
+
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
-        {
-            rb.isKinematic = true; // Make the Rigidbody kinematic to stop physics interactions
-        }
+            rb.isKinematic = true;
+
         if (GameOverUI != null)
+            GameOverUI.SetActive(true);
+    }
+
+    public void AddItemToInventory(ItemData newItem)
+    {
+        foreach (InventorySlot slot in inventorySlots)
         {
-            GameOverUI.SetActive(true); // Show the Game Over UI
+            if (!slot.icon.enabled)
+            {
+                slot.SetItem(newItem);
+                return;
+            }
         }
 
-        // Optionally, stop all movement and input handling here if the player dies
-        // For example, if you have a PlayerInput script, you might disable it.
-        // GetComponent<PlayerInput>().enabled = false;
+        Debug.Log("Inventory ??y!");
     }
 }
