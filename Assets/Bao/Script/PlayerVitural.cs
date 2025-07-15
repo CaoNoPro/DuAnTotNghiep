@@ -3,21 +3,25 @@ using UnityEngine.UI;
 
 public class PlayerVirtual : MonoBehaviour
 {
-
+    public static PlayerVirtual playerVirtual; 
     public Slider HealthSlider;
     public int maxHealth;
+    public float currentHealth;
     public float healFallRate; 
 
     public Slider ThirstSlider;
     public int maxThirst;
+    public float currentThirst;
     public float thirstFallRate; 
 
     public Slider HungerSlider;
     public int maxHunger;
+    public float currentHunger;
     public float hungerFallRate; 
 
     public Slider StaminaSlider;
     public int maxStamina;
+    public int currentStamina;
     public float staminaFallRatePerSecond = 10f;
     public float staminaRegainRatePerSecond = 5f;
 
@@ -50,6 +54,8 @@ public class PlayerVirtual : MonoBehaviour
 
     private void Update()
     {
+
+        
         if (isDead)
         {
             // Debug.Log("PlayerVirtual: Player is dead, Update loop skipped."); // Có thể bật nếu nghi ngờ vòng lặp Update bị bỏ qua khi player chết
@@ -60,22 +66,17 @@ public class PlayerVirtual : MonoBehaviour
         if (HungerSlider.value <= 0 && ThirstSlider.value <= 0)
         {
             HealthSlider.value -= Time.deltaTime / healFallRate * 2;
-            // Debug.Log("Health decreasing (severe): " + HealthSlider.value);
         }
         else if (HungerSlider.value <= 0 || ThirstSlider.value <= 0)
         {
             HealthSlider.value -= Time.deltaTime / healFallRate;
-            // Debug.Log("Health decreasing (moderate): " + HealthSlider.value);
         }
         else
         {
-            // Health slowly regenerates if hunger and thirst are not critical
             HealthSlider.value += Time.deltaTime / healFallRate;
-            HealthSlider.value = Mathf.Min(HealthSlider.value, maxHealth); // Clamp health to maxHealth
-            // Debug.Log("Health regenerating: " + HealthSlider.value);
+            HealthSlider.value = Mathf.Min(HealthSlider.value, maxHealth); 
         }
 
-        // QUAN TRỌNG: Kiểm tra máu để kích hoạt hàm chết
         if (HealthSlider.value <= 0)
         {
             Debug.Log("PlayerVirtual: Health <= 0. Attempting to call CharacterDead(). Current Health: " + HealthSlider.value);
@@ -83,8 +84,6 @@ public class PlayerVirtual : MonoBehaviour
         }
         else
         {
-            // Chỉ log nếu không chết để tránh spam console khi máu đã 0
-            // Debug.Log("PlayerVirtual: Current Health (Update): " + HealthSlider.value);
         }
 
         // --- Hunger Controller ---
