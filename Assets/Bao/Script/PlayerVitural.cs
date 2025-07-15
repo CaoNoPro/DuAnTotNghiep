@@ -4,17 +4,20 @@ using TMPro;
 
 public class PlayerVirtual : MonoBehaviour
 {
+
+    [Header("Vital Stats")]
     public Slider HealthSlider;
     public int maxHealth;
-    public float healFallRate; 
+    public float healFallRate;
 
     public Slider ThirstSlider;
     public int maxThirst;
-    public float thirstFallRate; 
+    public float thirstFallRate;
 
     public Slider HungerSlider;
     public int maxHunger;
-    public float hungerFallRate; 
+    public float hungerFallRate;
+
 
     public Slider StaminaSlider;
     public int maxStamina;
@@ -56,40 +59,41 @@ public class PlayerVirtual : MonoBehaviour
 
     private void Update()
     {
-        if (isDead)
+
+        if (isDead) return;
+
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            // Debug.Log("PlayerVirtual: Player is dead, Update loop skipped."); // Có thể bật nếu nghi ngờ vòng lặp Update bị bỏ qua khi player chết
-            return;
+            inventoryOpen = !inventoryOpen;
+            inventoryPanel.SetActive(inventoryOpen);
+
+            Cursor.lockState = inventoryOpen ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = inventoryOpen;
+            Time.timeScale = inventoryOpen ? 0f : 1f;
         }
 
-        HandleVitals();
-        HandleStamina();
-    }
-
-    private void HandleVitals()
-    {
+        // --- Health Regeneration/Degeneration ---
         if (HungerSlider.value <= 0 && ThirstSlider.value <= 0)
+        {
             HealthSlider.value -= Time.deltaTime / healFallRate * 2;
-            // Debug.Log("Health decreasing (severe): " + HealthSlider.value);
         }
         else if (HungerSlider.value <= 0 || ThirstSlider.value <= 0)
+        {
             HealthSlider.value -= Time.deltaTime / healFallRate;
-            // Debug.Log("Health decreasing (moderate): " + HealthSlider.value);
         }
         else
         {
             HealthSlider.value += Time.deltaTime / healFallRate;
-            HealthSlider.value = Mathf.Min(HealthSlider.value, maxHealth); // Clamp health to maxHealth
-            // Debug.Log("Health regenerating: " + HealthSlider.value);
+            HealthSlider.value = Mathf.Min(HealthSlider.value, maxHealth); 
         }
 
         if (HealthSlider.value <= 0)
+        {
+            Debug.Log("PlayerVirtual: Health <= 0. Attempting to call CharacterDead(). Current Health: " + HealthSlider.value);
             CharacterDead();
         }
         else
         {
-            // Chỉ log nếu không chết để tránh spam console khi máu đã 0
-            // Debug.Log("PlayerVirtual: Current Health (Update): " + HealthSlider.value);
         }
 
         // --- Hunger Controller ---
@@ -101,6 +105,43 @@ public class PlayerVirtual : MonoBehaviour
         {
             HungerSlider.value = 0;
         }
+        HungerSlider.value = Mathf.Clamp(HungerSlider.value, 0, maxHunger);
+        // Debug.Log("Current Hunger: " + HungerSlider.value);
+
+
+        // --- Thirst Controller ---
+        if (ThirstSlider.value > 0)
+        {
+            ThirstSlider.value -= Time.deltaTime / thirstFallRate;
+        }
+        else
+        {
+            ThirstSlider.value = 0;
+        }
+        ThirstSlider.value = Mathf.Clamp(ThirstSlider.value, 0, maxThirst);
+        // Debug.Log("Current Thirst: " + ThirstSlider.value);
+
+        // --- Stamina Controller for Sprinting ---
+
+        HandleStamina();
+    }
+
+    private void HandleVitals()
+    {
+        if (HungerSlider.value <= 0 && ThirstSlider.value <= 0)
+            HealthSlider.value -= Time.deltaTime / healFallRate * 2;
+        else if (HungerSlider.value <= 0 || ThirstSlider.value <= 0)
+            HealthSlider.value -= Time.deltaTime / healFallRate;
+        else
+        {
+            HealthSlider.value += Time.deltaTime / healFallRate;
+            HealthSlider.value = Mathf.Min(HealthSlider.value, maxHealth);
+        }
+
+        if (HealthSlider.value <= 0)
+            CharacterDead();
+
+        HungerSlider.value -= Time.deltaTime / hungerFallRate;
         HungerSlider.value = Mathf.Clamp(HungerSlider.value, 0, maxHunger);
 
         ThirstSlider.value -= Time.deltaTime / thirstFallRate;

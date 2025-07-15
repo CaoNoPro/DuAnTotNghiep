@@ -4879,7 +4879,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6093796688034049197}
-  - component: {fileID: 6323115635172973081}
+  - component: {fileID: 7765417252078224271}
   m_Layer: 0
   m_Name: WeaponHolder
   m_TagString: Untagged
@@ -4905,7 +4905,7 @@ Transform:
   - {fileID: 3847242159431858567}
   m_Father: {fileID: 1207445330808695569}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6323115635172973081
+--- !u!114 &7765417252078224271
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4914,10 +4914,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 121515157294964605}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba327135b078cf34e8533fe3c8d31215, type: 3}
+  m_Script: {fileID: 11500000, guid: 6dd2bbdbdaab1414b82a53026af2da94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedWeapon: 0
+  selectWeapon: 0
 --- !u!1 &128012131901390326
 GameObject:
   m_ObjectHideFlags: 0
@@ -17745,7 +17745,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7126943492427054947}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00029062986, y: -0.00013246424, z: 0.0033322528, w: 0.9999944}
+  m_LocalRotation: {x: 0.00028755798, y: -0.00013184953, z: 0.0033336119, w: 0.9999944}
   m_LocalPosition: {x: -1.2157774, y: 1.96, z: 0.9234061}
   m_LocalScale: {x: 0.5, y: 1, z: 0.5}
   m_ConstrainProportionsScale: 0
@@ -17896,15 +17896,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HealthSlider: {fileID: 7358454422969557157}
   maxHealth: 100
-  currentHealth: 0
   healFallRate: 5
   ThirstSlider: {fileID: 159534234985395163}
   maxThirst: 100
-  currentThirst: 0
   thirstFallRate: 5
   HungerSlider: {fileID: 6818997371027371303}
   maxHunger: 100
-  currentHunger: 0
   hungerFallRate: 5
   StaminaSlider: {fileID: 4327086284984203159}
   maxStamina: 100
@@ -17913,6 +17910,8 @@ MonoBehaviour:
   staminaRegainRatePerSecond: 5
   isDead: 1
   GameOverUI: {fileID: 0}
+  inventoryPanel: {fileID: 0}
+  inventorySlots: []
 --- !u!95 &1832095276455590741
 Animator:
   serializedVersion: 7

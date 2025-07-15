@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour
 {
@@ -24,13 +26,14 @@ public class SaveManager : MonoBehaviour
 
     #region || ------General Section------||
 
+    #region || ------Saving------||
     public void SaveGame()
     {
         AllGameData data = new AllGameData();
 
         data.playerData = GetPlayerData();
 
-        SaveAllGameData(data);
+        SelectSaveType(data);
     }
 
     private PlayerData GetPlayerData()
@@ -39,11 +42,20 @@ public class SaveManager : MonoBehaviour
         playerStats[0] = PlayerState.Instance.currentHealth;
         playerStats[1] = PlayerState.Instance.currentThirst;
         playerStats[2] = PlayerState.Instance.currentHunger;
+
+        float[] playerPositionAndRotation = new float[6];
+        playerPositionAndRotation[0] = PlayerState.Instance.playerBody.transform.position.x;
+        playerPositionAndRotation[1] = PlayerState.Instance.playerBody.transform.position.y;
+        playerPositionAndRotation[2] = PlayerState.Instance.playerBody.transform.position.z;
+
+        playerPositionAndRotation[3] = PlayerState.Instance.playerBody.transform.rotation.x;
+        playerPositionAndRotation[4] = PlayerState.Instance.playerBody.transform.rotation.y;
+        playerPositionAndRotation[5] = PlayerState.Instance.playerBody.transform.rotation.z;
         
-        return new PlayerData(playerStats);
+        return new PlayerData(playerStats, playerPositionAndRotation);
     }
 
-    public void SaveAllGameData(AllGameData gameData)
+    public void SelectSaveType(AllGameData gameData)
     {
         if (isSavingToJson)
         {
@@ -55,7 +67,73 @@ public class SaveManager : MonoBehaviour
             SaveGameToBinaryFile(gameData);
         }
     }
+    #endregion
 
+    #region || ------Loading------||
+
+    public AllGameData LoadingTypeSwitch()
+    {
+        if (isSavingToJson)
+        {
+            AllGameData gameData = LoadGameToBinaryFile();
+            return gameData;
+        }
+        else
+        {
+            AllGameData gameData = LoadGameToBinaryFile();
+            return gameData;
+        }
+    }
+
+    public void LoadGame()
+    {
+        //player Data
+        SetPlayerData(LoadingTypeSwitch().playerData);
+        //Enviroment Data
+
+    }
+
+    private void SetPlayerData(PlayerData playerData)
+    {
+        //Setting player stats
+        PlayerState.Instance.currentHealth = playerData.playerStats[0];
+        PlayerState.Instance.currentThirst = playerData.playerStats[1];
+        PlayerState.Instance.currentHunger = playerData.playerStats[2];
+
+        //setting position
+        Vector3 loadedPosition;
+        loadedPosition.x = playerData.playerPositionAndRotation[0];
+        loadedPosition.y = playerData.playerPositionAndRotation[1];
+        loadedPosition.z = playerData.playerPositionAndRotation[2];
+
+        PlayerState.Instance.playerBody.transform.position = loadedPosition;
+
+        Vector3 loadedRotation;
+        loadedRotation.x = playerData.playerPositionAndRotation[3];
+        loadedRotation.y = playerData.playerPositionAndRotation[4];
+        loadedRotation.z = playerData.playerPositionAndRotation[5];
+
+        PlayerState.Instance.playerBody.transform.rotation = Quaternion.Euler(loadedRotation);
+
+    }
+
+    public void StartLoadedGame()
+    {
+        SceneManager.LoadScene("CIty new 2");
+        StartCoroutine(DelayLoading());
+    }
+
+    private IEnumerator DelayLoading()
+    {
+        yield return new WaitForSeconds(1f);
+
+        LoadGame();
+
+        print("Data Loaded from" + Application.persistentDataPath + "/Save_game.bin");
+    }
+
+
+    #endregion
 
     #endregion
 
@@ -91,8 +169,8 @@ public class SaveManager : MonoBehaviour
         return null;
     }
 
-
     #endregion
+
     #region || ------Settings Section------||
     #region || ------Volume Settings------||
     [System.Serializable]
