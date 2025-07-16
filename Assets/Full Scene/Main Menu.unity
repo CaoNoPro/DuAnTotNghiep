@@ -263,6 +263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aacda3a45567eea4ba7c2ed61c8da71c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoadGameBTN: {fileID: 1029915260}
 --- !u!1 &30786369
 GameObject:
   m_ObjectHideFlags: 0
@@ -983,6 +984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3623e5af5c3035143bd366e4896d17d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSavingToJson: 0
 --- !u!4 &272616635
 Transform:
   m_ObjectHideFlags: 0

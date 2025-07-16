@@ -1,23 +1,23 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerVirtual : MonoBehaviour
 {
-    public static PlayerVirtual playerVirtual; 
+
+    [Header("Vital Stats")]
     public Slider HealthSlider;
     public int maxHealth;
-    public float currentHealth;
-    public float healFallRate; 
+    public float healFallRate;
 
     public Slider ThirstSlider;
     public int maxThirst;
-    public float currentThirst;
-    public float thirstFallRate; 
+    public float thirstFallRate;
 
     public Slider HungerSlider;
     public int maxHunger;
-    public float currentHunger;
-    public float hungerFallRate; 
+    public float hungerFallRate;
+
 
     public Slider StaminaSlider;
     public int maxStamina;
@@ -25,13 +25,18 @@ public class PlayerVirtual : MonoBehaviour
     public float staminaFallRatePerSecond = 10f;
     public float staminaRegainRatePerSecond = 5f;
 
+    [Header("Game State")]
     public bool isDead = false;
     public GameObject GameOverUI;
 
-    // private CharacterController characterController; // Bạn chưa sử dụng biến này, có thể bỏ qua hoặc khởi tạo nếu dùng
+    [Header("Inventory")]
+    public GameObject inventoryPanel;
+    public InventorySlot[] inventorySlots;
+    private bool inventoryOpen = false;
 
     private void Start()
     {
+        // Setup stats
         HealthSlider.maxValue = maxHealth;
         HealthSlider.value = maxHealth;
 
@@ -44,22 +49,27 @@ public class PlayerVirtual : MonoBehaviour
         StaminaSlider.maxValue = maxStamina;
         StaminaSlider.value = maxStamina;
 
+        // Setup UI
         if (GameOverUI != null)
-        {
             GameOverUI.SetActive(false);
-        }
 
-        Debug.Log("PlayerVirtual: Game started. Initial Health: " + HealthSlider.value);
+        if (inventoryPanel != null)
+            inventoryPanel.SetActive(false);
     }
 
     private void Update()
     {
 
-        
-        if (isDead)
+        if (isDead) return;
+
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            // Debug.Log("PlayerVirtual: Player is dead, Update loop skipped."); // Có thể bật nếu nghi ngờ vòng lặp Update bị bỏ qua khi player chết
-            return;
+            inventoryOpen = !inventoryOpen;
+            inventoryPanel.SetActive(inventoryOpen);
+
+            Cursor.lockState = inventoryOpen ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = inventoryOpen;
+            Time.timeScale = inventoryOpen ? 0f : 1f;
         }
 
         // --- Health Regeneration/Degeneration ---
@@ -112,7 +122,30 @@ public class PlayerVirtual : MonoBehaviour
         // Debug.Log("Current Thirst: " + ThirstSlider.value);
 
         // --- Stamina Controller for Sprinting ---
+
         HandleStamina();
+    }
+
+    private void HandleVitals()
+    {
+        if (HungerSlider.value <= 0 && ThirstSlider.value <= 0)
+            HealthSlider.value -= Time.deltaTime / healFallRate * 2;
+        else if (HungerSlider.value <= 0 || ThirstSlider.value <= 0)
+            HealthSlider.value -= Time.deltaTime / healFallRate;
+        else
+        {
+            HealthSlider.value += Time.deltaTime / healFallRate;
+            HealthSlider.value = Mathf.Min(HealthSlider.value, maxHealth);
+        }
+
+        if (HealthSlider.value <= 0)
+            CharacterDead();
+
+        HungerSlider.value -= Time.deltaTime / hungerFallRate;
+        HungerSlider.value = Mathf.Clamp(HungerSlider.value, 0, maxHunger);
+
+        ThirstSlider.value -= Time.deltaTime / thirstFallRate;
+        ThirstSlider.value = Mathf.Clamp(ThirstSlider.value, 0, maxThirst);
     }
 
     private void HandleStamina()
@@ -120,68 +153,47 @@ public class PlayerVirtual : MonoBehaviour
         bool isSprinting = Input.GetKey(KeyCode.LeftShift) && StaminaSlider.value > 0;
 
         if (isSprinting)
-        {
             StaminaSlider.value -= staminaFallRatePerSecond * Time.deltaTime;
-        }
-        else
-        {
-            if (StaminaSlider.value < maxStamina)
-            {
-                StaminaSlider.value += staminaRegainRatePerSecond * Time.deltaTime;
-            }
-        }
+        else if (StaminaSlider.value < maxStamina)
+            StaminaSlider.value += staminaRegainRatePerSecond * Time.deltaTime;
+
         StaminaSlider.value = Mathf.Clamp(StaminaSlider.value, 0, maxStamina);
     }
 
-    public void TakeDamage(int DamageAmount)
+    public void TakeDamage(int damageAmount)
     {
-        HealthSlider.value -= DamageAmount;
-        Debug.Log("PlayerVirtual: Player took damage: " + DamageAmount + ", Current Health: " + HealthSlider.value);
+        HealthSlider.value -= damageAmount;
         if (HealthSlider.value <= 0 && !isDead)
-        {
-            Debug.Log("PlayerVirtual: Health <= 0 from TakeDamage. Attempting to call CharacterDead().");
             CharacterDead();
-        }
     }
 
     public void CharacterDead()
     {
-        if (isDead) return; // Tránh gọi nhiều lần nếu đã chết
-
-        Debug.Log("PlayerVirtual: CharacterDead() called. Player is now dead!");
+        Debug.Log("Player is dead!");
         isDead = true;
-        
-        // Vô hiệu hóa collider để không tương tác vật lý nữa
-        Collider[] colliders = GetComponents<Collider>();
-        foreach (Collider collider in colliders)
-        {
-            collider.enabled = false;
-        }
-        
-        // Vô hiệu hóa Rigidbody (nếu có) để dừng di chuyển vật lý
+
+        foreach (Collider col in GetComponents<Collider>())
+            col.enabled = false;
+
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
-        {
-            rb.isKinematic = true; // Dừng mọi tương tác vật lý
-            // Tùy chọn: rb.velocity = Vector3.zero; để dừng chuyển động ngay lập tức
-        }
-
-        // Tùy chọn: Vô hiệu hóa các script liên quan đến di chuyển, input
-        // Ví dụ: GetComponent<PlayerMovement>().enabled = false;
-        // GetComponent<PlayerInput>().enabled = false;
-        this.enabled = false; // Tắt chính script PlayerVirtual để Update() không chạy nữa
+            rb.isKinematic = true;
 
         if (GameOverUI != null)
+            GameOverUI.SetActive(true);
+    }
+
+    public void AddItemToInventory(ItemData newItem)
+    {
+        foreach (InventorySlot slot in inventorySlots)
         {
-            GameOverUI.SetActive(true); // Hiển thị bảng Game Over
-            Debug.Log("PlayerVirtual: GameOverUI set to active.");
-        }
-        else
-        {
-            Debug.LogError("PlayerVirtual: GameOverUI is NULL! Please assign it in the Inspector.");
+            if (!slot.icon.enabled)
+            {
+                slot.SetItem(newItem);
+                return;
+            }
         }
 
-        // Tùy chọn: Dừng thời gian game
-        // Time.timeScale = 0f;
+        Debug.Log("Inventory ??y!");
     }
 }
