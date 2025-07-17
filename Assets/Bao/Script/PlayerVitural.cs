@@ -4,26 +4,25 @@ using TMPro;
 
 public class PlayerVirtual : MonoBehaviour
 {
-
-    [Header("Vital Stats")]
+    public TextMeshProUGUI healthCounter;
+    public GameObject playerState;
+    //player heal
+    [Header("player heal")]
     public Slider HealthSlider;
     public int maxHealth;
     public float healFallRate;
 
+    //player thirst
+    [Header("player thirst")]
     public Slider ThirstSlider;
     public int maxThirst;
     public float thirstFallRate;
 
+    //player hunger
+    [Header("player hunger")]
     public Slider HungerSlider;
     public int maxHunger;
     public float hungerFallRate;
-
-
-    public Slider StaminaSlider;
-    public int maxStamina;
-    public int currentStamina;
-    public float staminaFallRatePerSecond = 10f;
-    public float staminaRegainRatePerSecond = 5f;
 
     [Header("Game State")]
     public bool isDead = false;
@@ -45,9 +44,6 @@ public class PlayerVirtual : MonoBehaviour
 
         ThirstSlider.maxValue = maxThirst;
         ThirstSlider.value = maxThirst;
-
-        StaminaSlider.maxValue = maxStamina;
-        StaminaSlider.value = maxStamina;
 
         // Setup UI
         if (GameOverUI != null)
@@ -121,9 +117,6 @@ public class PlayerVirtual : MonoBehaviour
         ThirstSlider.value = Mathf.Clamp(ThirstSlider.value, 0, maxThirst);
         // Debug.Log("Current Thirst: " + ThirstSlider.value);
 
-        // --- Stamina Controller for Sprinting ---
-
-        HandleStamina();
     }
 
     private void HandleVitals()
@@ -146,18 +139,6 @@ public class PlayerVirtual : MonoBehaviour
 
         ThirstSlider.value -= Time.deltaTime / thirstFallRate;
         ThirstSlider.value = Mathf.Clamp(ThirstSlider.value, 0, maxThirst);
-    }
-
-    private void HandleStamina()
-    {
-        bool isSprinting = Input.GetKey(KeyCode.LeftShift) && StaminaSlider.value > 0;
-
-        if (isSprinting)
-            StaminaSlider.value -= staminaFallRatePerSecond * Time.deltaTime;
-        else if (StaminaSlider.value < maxStamina)
-            StaminaSlider.value += staminaRegainRatePerSecond * Time.deltaTime;
-
-        StaminaSlider.value = Mathf.Clamp(StaminaSlider.value, 0, maxStamina);
     }
 
     public void TakeDamage(int damageAmount)
