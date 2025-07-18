@@ -6,6 +6,20 @@ TagManager:
   tags:
   - Target
   - Wall
+  - CinemachineTarget
+  - Ground
+  - Enemy
+  - FxTemporaire
+  - KeyBlack
+  - KeyBlue
+  - KeyGreen
+  - KeyRed
+  - DoorBlack
+  - DoorBlue
+  - DoorGreen
+  - DoorRed
+  - item
+  - Item
   layers:
   - Default
   - TransparentFX
