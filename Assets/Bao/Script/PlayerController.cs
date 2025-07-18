@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
             velocity.y = -2f;
         }
 
-        if (Input.GetKey(KeyCode.LeftShift) && (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && playerVirtual.StaminaSlider.value > 0)
+        if (Input.GetKey(KeyCode.LeftShift) && (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) )
         {
             isSprinting = true;
             currentSpeed = runSpeed;
