@@ -53,22 +53,15 @@ public class InventorySystem : MonoBehaviour
     {
         foreach (InventorySlot slot in slots)
         {
-            // Nếu slot trống thì thêm vào
             if (!slot.HasItem)
             {
                 slot.SetItem(itemData);
                 return true;
             }
-
-            // Nếu slot đã chứa item trùng tên thì bỏ qua để không ghi đè
-            if (slot.HasItem && slot.CurrentItem.itemName == itemData.itemName)
-            {
-                // Nếu bạn muốn cộng stack thì xử lý tại đây
-                return false; // Đã có item này rồi
-            }
         }
 
-        Debug.Log("❗ Inventory đầy hoặc item bị trùng");
+        // Nếu không còn slot trống
+        Debug.Log("Inventory đầy, không thể thêm: " + itemData.itemName);
         return false;
     }
 
