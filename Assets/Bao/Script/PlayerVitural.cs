@@ -157,32 +157,24 @@ public class PlayerVirtual : MonoBehaviour
         switch (itemToUse.itemType)
         {
             case ItemType.Healing:
-                // Add health, ensuring it doesn't exceed maxHealth
                 HealthSlider.value += itemToUse.healAmount;
-                HealthSlider.value = Mathf.Min(HealthSlider.value, maxHealth); // Use Mathf.Min to cap at maxHealth
+                HealthSlider.value = Mathf.Min(HealthSlider.value, maxHealth);
                 Debug.Log($"Healed for {itemToUse.healAmount}. Current Health: {HealthSlider.value}");
                 break;
             case ItemType.Food:
-                // Add hunger, ensuring it doesn't exceed maxHunger
                 HungerSlider.value += itemToUse.hungerRestore;
-                HungerSlider.value = Mathf.Min(HungerSlider.value, maxHunger); // Cap at maxHunger
+                HungerSlider.value = Mathf.Min(HungerSlider.value, maxHunger);
                 Debug.Log($"Ate food, restored {itemToUse.hungerRestore} hunger. Current Hunger: {HungerSlider.value}");
                 break;
             case ItemType.Drink:
-                // Add thirst, ensuring it doesn't exceed maxThirst
                 ThirstSlider.value += itemToUse.thirstRestore;
-                ThirstSlider.value = Mathf.Min(ThirstSlider.value, maxThirst); // Cap at maxThirst
+                ThirstSlider.value = Mathf.Min(ThirstSlider.value, maxThirst);
                 Debug.Log($"Drank, restored {itemToUse.thirstRestore} thirst. Current Thirst: {ThirstSlider.value}");
                 break;
             default:
                 Debug.LogWarning("Attempted to use an item with an unhandled type: " + itemToUse.itemType);
                 break;
         }
-
-        // Optionally, remove the item from inventory after use
-        // This assumes your InventorySlot has a method to clear the slot
-        // You would call this from where you trigger item usage (e.g., clicking a slot)
-        // Example: inventorySlots[index].ClearSlot();
     }
 
     public void CharacterDead()
