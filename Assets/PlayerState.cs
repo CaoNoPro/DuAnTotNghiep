@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerState : MonoBehaviour
@@ -13,6 +14,8 @@ public class PlayerState : MonoBehaviour
     //Thirst
     public float currentThirst;
     public float maxThirst;
+
+    public bool isThirstActive;
 
     //Hunger
     public float currentHunger;
@@ -38,11 +41,19 @@ public class PlayerState : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        currentThirst = maxThirst;
         currentHunger = maxHunger;
+        currentThirst = maxThirst;
+        StartCoroutine(decreaseThirst());
     }
 
-
+    IEnumerator decreaseThirst()
+    {
+        while (true)
+        {
+            currentThirst -= 1;
+            yield return new WaitForSeconds(10);
+        }
+    }
 
     void Update()
     {
@@ -54,27 +65,11 @@ public class PlayerState : MonoBehaviour
             distanceTravelled = 0;
             currentHunger -= 1;
         }
-    }
 
-    public void TakeDamage(float damageAmount)
-    {
-        currentHealth -= damageAmount;
-        if (currentHealth <= 0)
+
+        if (Input.GetKeyDown(KeyCode.N))
         {
-            currentHealth = 0;
-            Die();
-        }
-    }
-    private void Die()
-    {
-        Debug.Log("Player has die");
-    }
-    public void Heal(float healAmount)
-    {
-        currentHealth += healAmount;
-        if (currentHealth >= maxHealth)
-        {
-            currentHealth = maxHealth;
+            currentHealth -= 10;
         }
     }
 }

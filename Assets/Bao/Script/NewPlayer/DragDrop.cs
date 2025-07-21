@@ -6,8 +6,6 @@ using UnityEngine.UI;
  
 public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
- 
-    [SerializeField] private Canvas canvas;
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
  
@@ -19,10 +17,8 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
  
     private void Awake()
     {
-        
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
- 
     }
  
  
@@ -30,6 +26,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     {
  
         Debug.Log("OnBeginDrag");
+
         canvasGroup.alpha = .6f;
         //So the ray cast will ignore the item itself.
         canvasGroup.blocksRaycasts = false;

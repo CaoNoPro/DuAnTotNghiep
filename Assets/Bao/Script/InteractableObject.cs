@@ -14,10 +14,18 @@ public class InteractableObject : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && playerInRange && SelectionManager.Instance.onTarget) 
+        if (Input.GetKeyDown(KeyCode.E) && playerInRange && SelectionManager.Instance.onTarget)
         {
-            Debug.Log("đồ đã vào túi đồ");
-            Destroy(gameObject);
+            //nếu túi đồ chưa đầy 
+            if (!InventorySystem.Instance.CheckIfFull())
+            {
+                InventorySystem.Instance.AddToInventory(ItemName);
+                Destroy(gameObject);
+            }
+            else
+            {
+                Debug.Log("túi đã đầy");
+            }
         }
     }
 
