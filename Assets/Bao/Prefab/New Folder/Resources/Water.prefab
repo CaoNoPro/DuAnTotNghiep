@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8492315754085421375}
   - component: {fileID: 3051715186984565373}
   m_Layer: 5
-  m_Name: Water_inv
+  m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 920801d036b362345b318efef39784f4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -89,7 +89,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59dd4a3d8066a0b469d2ab9368771b05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 0}
 --- !u!225 &3051715186984565373
 CanvasGroup:
   m_ObjectHideFlags: 0
