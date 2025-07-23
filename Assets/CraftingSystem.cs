@@ -18,12 +18,12 @@ public class CraftingSystem : MonoBehaviour
     Button craftMedicBTN;
 
     //Rep Text
-    TextMeshProUGUI MedicRep1, MedicRep2;
+    TextMeshProUGUI MedicReq1, MedicReq2;
 
     public bool isOpen;
 
     //All BluePrint
-    public BluePrint MedkitBLP = new BluePrint("Medkit", 2,"Cloth",2,"Alcohol",1);
+    public BluePrint MedkitBLP = new BluePrint("Medkit", 2, "Cloth", 2, "Alcohol", 1);
 
 
     public static CraftingSystem Instance { get; set; }
@@ -47,8 +47,8 @@ public class CraftingSystem : MonoBehaviour
         medicBTN.onClick.AddListener(delegate { OpenMedicCategory(); });
 
         //Medkit
-        MedicRep1 = MedicUI.transform.Find("Medkit").transform.Find("MedReq1").GetComponent<TextMeshProUGUI>();
-        MedicRep2 = MedicUI.transform.Find("Medkit").transform.Find("MedReq2").GetComponent<TextMeshProUGUI>();
+        MedicReq1 = MedicUI.transform.Find("Medkit").transform.Find("MedReq1").GetComponent<TextMeshProUGUI>();
+        MedicReq2 = MedicUI.transform.Find("Medkit").transform.Find("MedReq2").GetComponent<TextMeshProUGUI>();
 
         craftMedicBTN = MedicUI.transform.Find("Medkit").transform.Find("Button").GetComponent<Button>();
         craftMedicBTN.onClick.AddListener(delegate { CraftAnyItem(MedkitBLP); });
@@ -65,7 +65,7 @@ public class CraftingSystem : MonoBehaviour
     {
         //đặt vật phẩm vào túi đồ
 
-        InventorySystem.Instance.AddToInventory(bluePrintToCraft.ItemName);
+        InventorySystem.Instance.AddToInventory(bluePrintToCraft.itemName);
 
         //xóa vật phẩm trong túi đồ
 
@@ -119,7 +119,7 @@ public class CraftingSystem : MonoBehaviour
         }
     }
 
-    private void RefreshNeededItems()
+    public void RefreshNeededItems()
     {
 
         int Cloth_count = 0;
@@ -144,8 +144,8 @@ public class CraftingSystem : MonoBehaviour
 
         //------medkit-------//
 
-        MedicRep1.text = "2 Cloth[" + Cloth_count + "]";
-        MedicRep2.text = "1 Alcohol[" + Alcohol_count + "]";
+        MedicReq1.text = "2 Cloth[" + Cloth_count + "]";
+        MedicReq2.text = "1 Alcohol[" + Alcohol_count + "]";
 
         if (Cloth_count >= 2 && Alcohol_count >= 1)
         {

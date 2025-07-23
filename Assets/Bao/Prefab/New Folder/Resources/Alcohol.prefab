@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1117068090062717114}
   - component: {fileID: 1993502435280438559}
   - component: {fileID: 3076998866670108374}
+  - component: {fileID: -8120424198427664380}
   m_Layer: 5
   m_Name: Alcohol
   m_TagString: Untagged
@@ -101,3 +102,22 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &-8120424198427664380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3385664031662062931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d73d3d501651549428937e6354ff7cc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTrashable: 0
+  thisName: Alcohol
+  thisDes: "l\xE0 m\u1ED9t ch\u1EA5t kh\u1EED tr\xF9ng v\u1EADt d\u1EE5ng y t\u1EBF"
+  isConsumable: 1
+  healthEffect: 0
+  thirstEffect: 0
+  hungerEffect: 0

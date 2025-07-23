@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class InventorySystem : MonoBehaviour
 {
-
+    public GameObject ItemInfoUI;
     public static InventorySystem Instance { get; set; }
 
     public GameObject inventoryScreenUI;
@@ -134,14 +134,15 @@ public class InventorySystem : MonoBehaviour
             {
                 if (slotList[i].transform.GetChild(0).name == nameToRemove + "(Clone)" && counter != 0)
                 {
-                    Destroy(slotList[i].transform.GetChild(0).gameObject);
+                    DestroyImmediate(slotList[i].transform.GetChild(0).gameObject);
 
                     counter -= 1;
                 }
             }
         }
 
-
+        ReCalculateList();
+        CraftingSystem.Instance.RefreshNeededItems();
 
     }
 
@@ -156,11 +157,7 @@ public class InventorySystem : MonoBehaviour
             {
 
                 string name = slot.transform.GetChild(0).name;
-
-                string str1 = name;
-
                 string str2 = "(Clone)";
-
                 string Result = name.Replace(str2, "");
 
                 itemList.Add(Result);

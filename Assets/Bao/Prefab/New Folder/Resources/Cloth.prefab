@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2172692945738610380}
   - component: {fileID: 3668993859240984244}
   - component: {fileID: 7390223185850604446}
+  - component: {fileID: 4853521531347992743}
   m_Layer: 5
   m_Name: Cloth
   m_TagString: Untagged
@@ -101,3 +102,22 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &4853521531347992743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8143901925611875060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d73d3d501651549428937e6354ff7cc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTrashable: 0
+  thisName: Cloth
+  thisDes: "l\xE0 m\u1ED9t m\u1EA3nh v\u1EA3i"
+  isConsumable: 1
+  healthEffect: 0
+  thirstEffect: 0
+  hungerEffect: 0

@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class BluePrint : MonoBehaviour
+public class BluePrint
 {
-    public string ItemName;
+    public string itemName;
 
     public string Req1;
     public string Req2;
@@ -14,8 +14,10 @@ public class BluePrint : MonoBehaviour
 
     public BluePrint(string name, int ReqNum, string R1, int R1num, string R2, int R2num)
     {
-        ItemName = name;
+        itemName = name;
+
         numOfReq = ReqNum;
+
         Req1 = R1;
         Req2 = R2;
 

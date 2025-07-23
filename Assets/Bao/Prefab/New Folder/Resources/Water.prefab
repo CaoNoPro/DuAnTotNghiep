@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9137474957983936549}
   - component: {fileID: 8492315754085421375}
   - component: {fileID: 3051715186984565373}
+  - component: {fileID: -6525751726756594771}
   m_Layer: 5
   m_Name: Water
   m_TagString: Untagged
@@ -101,3 +102,22 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &-6525751726756594771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7366640916923049107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d73d3d501651549428937e6354ff7cc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTrashable: 0
+  thisName: Water
+  thisDes: "ch\u1EC9 l\xE0 n\u01B0\u1EDBc "
+  isConsumable: 1
+  healthEffect: 0
+  thirstEffect: 20
+  hungerEffect: 0
