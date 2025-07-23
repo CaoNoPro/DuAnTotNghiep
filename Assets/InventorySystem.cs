@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class InventorySystem : MonoBehaviour
 {
-
+    public GameObject ItemInfoUI;
     public static InventorySystem Instance { get; set; }
 
     public GameObject inventoryScreenUI;
@@ -64,15 +64,17 @@ public class InventorySystem : MonoBehaviour
             Debug.Log("i is pressed");
             inventoryScreenUI.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
             isOpen = true;
 
         }
         else if (Input.GetKeyDown(KeyCode.I) && isOpen)
         {
             inventoryScreenUI.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+
+            if (CraftingSystem.Instance.isOpen)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
             isOpen = false;
         }
     }
@@ -118,6 +120,48 @@ public class InventorySystem : MonoBehaviour
         else
         {
             return false;
+        }
+    }
+
+    public void RemoveItem(string nameToRemove, int amountToRemove)
+    {
+
+        int counter = amountToRemove;
+
+        for (var i = slotList.Count - 1; i >= 0; i--)
+        {
+            if (slotList[i].transform.childCount > 0)
+            {
+                if (slotList[i].transform.GetChild(0).name == nameToRemove + "(Clone)" && counter != 0)
+                {
+                    DestroyImmediate(slotList[i].transform.GetChild(0).gameObject);
+
+                    counter -= 1;
+                }
+            }
+        }
+
+        ReCalculateList();
+        CraftingSystem.Instance.RefreshNeededItems();
+
+    }
+
+
+    public void ReCalculateList()
+    {
+        itemList.Clear();
+
+        foreach (GameObject slot in slotList)
+        {
+            if (slot.transform.childCount > 0)
+            {
+
+                string name = slot.transform.GetChild(0).name;
+                string str2 = "(Clone)";
+                string Result = name.Replace(str2, "");
+
+                itemList.Add(Result);
+            }
         }
     }
 }
