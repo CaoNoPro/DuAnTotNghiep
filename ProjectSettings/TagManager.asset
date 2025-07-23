@@ -20,6 +20,8 @@ TagManager:
   - DoorRed
   - item
   - Item
+  - Slot
+  - QuickSlot
   layers:
   - Default
   - TransparentFX

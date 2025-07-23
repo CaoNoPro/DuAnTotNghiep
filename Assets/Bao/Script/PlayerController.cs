@@ -20,28 +20,7 @@ public class PlayerController : MonoBehaviour
     [Header("Look System")]
     public float mouseSensitivity = 100f;
     public Transform playerBody;
-
     private float xRotation = 0f;
-    [Header("Shooting System")]
-    public Camera fpsCam;
-    public float damage = 10f;
-    public float range = 100f;
-    public float fireRate = 0.5f;
-
-    private float nextTimeToFire = 0f;
-
-    [Header("Weapon & Aiming")]
-    public GameObject currentWeaponModel;
-    public float normalFOV = 60f;
-    public float aimFOV = 40f;
-    public float aimSpeed = 8f;
-    public float normalSensitivityMultiplier = 1f;
-    public float aimSensitivityMultiplier = 0.5f;
-    private Vector3 initialWeaponPosition;
-
-    [Header("UI & Game State")]
-    public GameObject pauseMenuUI;
-    public static bool GameIsPaused = false;
 
 
     private void Start()
@@ -50,21 +29,10 @@ public class PlayerController : MonoBehaviour
         currentSpeed = walkSpeed;
 
         Cursor.lockState = CursorLockMode.Locked;
-        if (currentWeaponModel != null)
-        {
-            initialWeaponPosition = currentWeaponModel.transform.localPosition;
-        }
-
-        if (pauseMenuUI != null)
-        {
-            pauseMenuUI.SetActive(false);
-        }
     }
 
     private void Update()
     {
-
-
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
@@ -79,11 +47,6 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isSprinting", isSprinting);
         }
 
-        if (fpsCam != null)
-        {
-            fpsCam.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        }
-
         playerBody.Rotate(Vector3.up * mouseX);
 
 
@@ -92,7 +55,7 @@ public class PlayerController : MonoBehaviour
             velocity.y = -2f;
         }
 
-        if (Input.GetKey(KeyCode.LeftShift) && (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) )
+        if (Input.GetKey(KeyCode.LeftShift) && (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0))
         {
             isSprinting = true;
             currentSpeed = runSpeed;
@@ -117,25 +80,5 @@ public class PlayerController : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
-
-
-
-        if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
-        {
-            nextTimeToFire = Time.time + fireRate;
-            Shoot();
-        }
-
-    }
-
-
-    void Shoot()
-    {
-        RaycastHit hit;
-
-        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
-        {
-            Debug.Log("Đã bắn trúng: " + hit.transform.name);
-        }
     }
 }
