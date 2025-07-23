@@ -21,6 +21,7 @@ TagManager:
   - item
   - Item
   - Slot
+  - QuickSlot
   layers:
   - Default
   - TransparentFX
