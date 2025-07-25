@@ -22,7 +22,21 @@ public class SaveManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    //Json Project Save Path
+    string JsonProjectPath;
+    //Json External/Real Save Path
+    string JsonPathPersistantl;
+    //Binary Save Path
+    string binarypath;
+
     public bool isSavingToJson;
+
+    private void Start()
+    {
+        JsonProjectPath = Application.dataPath + Path.AltDirectorySeparatorChar + "SaveGame.json";
+        JsonPathPersistantl = Application.persistentDataPath + Path.AltDirectorySeparatorChar + "SaveGame.json";
+        binarypath = Application.persistentDataPath + "/save_game.bin";
+    }
 
     #region || ------General Section------||
 
@@ -51,7 +65,7 @@ public class SaveManager : MonoBehaviour
         playerPositionAndRotation[3] = PlayerState.Instance.playerBody.transform.rotation.x;
         playerPositionAndRotation[4] = PlayerState.Instance.playerBody.transform.rotation.y;
         playerPositionAndRotation[5] = PlayerState.Instance.playerBody.transform.rotation.z;
-        
+
         return new PlayerData(playerStats, playerPositionAndRotation);
     }
 
@@ -59,7 +73,7 @@ public class SaveManager : MonoBehaviour
     {
         if (isSavingToJson)
         {
-            //saveGameDataToJsonFile(gameData);
+            SaveGameToJsonFile(gameData);
 
         }
         else
@@ -75,7 +89,7 @@ public class SaveManager : MonoBehaviour
     {
         if (isSavingToJson)
         {
-            AllGameData gameData = LoadGameToBinaryFile();
+            AllGameData gameData = LoadGameToJsonFile();
             return gameData;
         }
         else
@@ -143,35 +157,71 @@ public class SaveManager : MonoBehaviour
     {
         BinaryFormatter formatter = new BinaryFormatter();
 
-        string path = Application.persistentDataPath + "/save_game.bin";
-        FileStream stream = new FileStream(path, FileMode.Create);
+        FileStream stream = new FileStream(binarypath, FileMode.Create);
 
         formatter.Serialize(stream, gameData);
         stream.Close();
 
-        print("Data saved to" + Application.persistentDataPath + "/Save_game.bin");
+        print("Data saved to" + binarypath);
 
     }
 
     public AllGameData LoadGameToBinaryFile()
     {
-        string path = Application.persistentDataPath + "/Save_game.bin";
 
-        if (File.Exists(path))
+        if (File.Exists(binarypath))
         {
             BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
+            FileStream stream = new FileStream(binarypath, FileMode.Open);
             AllGameData data = formatter.Deserialize(stream) as AllGameData;
             stream.Close();
 
+            print("Data Loaded from" + binarypath);
+
             return data;
         }
-        return null;
+        else
+        {
+            return null;
+        }
+    }
+
+    #endregion
+
+    #region || ------To Json Section------||
+
+    public void SaveGameToJsonFile(AllGameData gameData)
+    {
+        string json = JsonUtility.ToJson(gameData);
+
+        string encryption = EncryptionDecryption(json);
+
+        using (StreamWriter writer = new StreamWriter(JsonProjectPath))
+        {
+            writer.Write(encryption);
+            print("Saved game to Json File at " + JsonProjectPath);
+        }
+        ;
+    }
+
+    public AllGameData LoadGameToJsonFile()
+    {
+        using (StreamReader reader = new StreamReader(JsonProjectPath))
+        {
+            string json = reader.ReadToEnd();
+
+            string decypted = EncryptionDecryption(json);
+
+            AllGameData data = JsonUtility.FromJson<AllGameData>(decypted);
+            return data;
+        }
+        ;
     }
 
     #endregion
 
     #region || ------Settings Section------||
+
     #region || ------Volume Settings------||
     [System.Serializable]
     public class VolumeSetting
@@ -203,6 +253,28 @@ public class SaveManager : MonoBehaviour
         return volumeSetting.music;
     }
     #endregion
+
+    #endregion
+
+    #region || ------Encryption------||
+
+    public string EncryptionDecryption(string data)
+    {
+        string Keyword = "1234567";
+        string result = "";
+
+        for (int i = 0; i < data.Length; i++)
+        {
+            result += (char)(data[i] ^ Keyword[i % Keyword.Length]);
+        }
+        return result;
+
+
+    }
+
+
+
+
 
     #endregion
 }

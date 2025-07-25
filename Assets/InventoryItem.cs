@@ -23,10 +23,67 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public float thirstEffect;
     public float hungerEffect;
 
+    //trang bị vật phẩm
+    public bool isEquippable;
+    public GameObject itemPendingEquipping;
+    public bool isInsideQuickSlot;
+    public bool isSelected;
+
+    public string itemName;
+    public Sprite icon;
+    public bool isWeapon = false;
+    public GameObject weapondPrefab; // Corrected typo here, but it was `weapondPrefab` in your original. Let's keep `weapondPrefab` for consistency with your code.
+
+    // Changed 'use' to 'Use'
+    public virtual void Use()
+    {
+        Debug.Log($"Using {itemName}");
+    }
+
+    public void EquipWeapon(Transform equipPoint)
+    {
+        if (isWeapon && weapondPrefab != null)
+        {
+            // Clear any existing weapons at the equip point
+            foreach (Transform child in equipPoint)
+            {
+                Destroy(child.gameObject);
+            }
+
+            GameObject equippedWeapon = Instantiate(weapondPrefab, equipPoint);
+            equippedWeapon.transform.localPosition = Vector3.zero;
+            equippedWeapon.transform.localRotation = Quaternion.identity;
+            equippedWeapon.transform.localScale = Vector3.one;
+        }
+    }
+
+    // Changed 'UnEquipWeapon' to 'UnequipWeapon'
+    public void UnequipWeapon(Transform equipPoint)
+    {
+        if (isWeapon)
+        {
+            foreach (Transform child in equipPoint)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+    }
     private void Start()
     {
         itemInfoUI = InventorySystem.Instance.ItemInfoUI;
         itemInfoUI_itemName = itemInfoUI.transform.Find("itemName").GetComponent<TextMeshProUGUI>();
+    }
+
+    void Update()
+    {
+        if (isSelected)
+        {
+            gameObject.GetComponent<DragDrop>().enabled = false;
+        }
+        else
+        {
+            gameObject.GetComponent<DragDrop>().enabled = true;
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -48,6 +105,12 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             {
                 itemPendingConsumption = gameObject;
                 ConsumFunction(healthEffect, thirstEffect, hungerEffect);
+            }
+
+            if (isEquippable && isInsideQuickSlot == false && EquipSystem.Instance.CheckIfFull() == false)
+            {
+                EquipSystem.Instance.AddToQuickSlots(gameObject);
+                isInsideQuickSlot = true;
             }
         }
     }
