@@ -22,6 +22,8 @@ TagManager:
   - Item
   - Slot
   - QuickSlot
+  - pickable
+  - waypoints
   layers:
   - Default
   - TransparentFX
