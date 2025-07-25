@@ -1,4 +1,4 @@
-using UnityEngine;
+ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
@@ -35,6 +35,8 @@ public class MenuManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
+            SelectionManager.Instance.DisableSelection();
+            SelectionManager.Instance.GetComponent<SelectionManager>().enabled = false;
         }
         else if (Input.GetKeyDown(KeyCode.F1) && !isMenuOpen)
         {
@@ -47,6 +49,12 @@ public class MenuManager : MonoBehaviour
             menuCanvas.SetActive(false);
 
             isMenuOpen = false;
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = false;
+
+            SelectionManager.Instance.EnableSelection();
+            SelectionManager.Instance.GetComponent<SelectionManager>().enabled = true;
         }
     }
 

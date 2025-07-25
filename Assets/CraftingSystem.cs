@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -97,13 +98,13 @@ public class CraftingSystem : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.L) && !isOpen)
         {
-
-            Debug.Log("l is pressed");
             craftingSceenUI.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            isOpen = true;
+            SelectionManager.Instance.DisableSelection();
+            SelectionManager.Instance.GetComponent<SelectionManager>().enabled = false;
 
+            isOpen = true;
         }
         else if (Input.GetKeyDown(KeyCode.L) && isOpen)
         {
@@ -114,6 +115,9 @@ public class CraftingSystem : MonoBehaviour
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
+
+                SelectionManager.Instance.EnableSelection();
+                SelectionManager.Instance.GetComponent<SelectionManager>().enabled = true;
             }
             isOpen = false;
         }

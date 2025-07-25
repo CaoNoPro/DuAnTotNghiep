@@ -9,6 +9,9 @@ public class SelectionManager : MonoBehaviour
     public GameObject interaction_info_ui;
     TextMeshProUGUI interactionText;
 
+    public Image centerPoint;
+    public Image hanIcon;
+
     private void Start()
     {
         onTarget = false;
@@ -43,17 +46,49 @@ public class SelectionManager : MonoBehaviour
 
                 interactionText.text = Interactable.GetItemName();
                 interaction_info_ui.SetActive(true);
+
+                if (Interactable.CompareTag("pickable"))
+                {
+                    centerPoint.gameObject.SetActive(false);
+                    hanIcon.gameObject.SetActive(true);
+                }
+                else
+                {
+                    hanIcon.gameObject.SetActive(false);
+                    centerPoint.gameObject.SetActive(true);
+                }
             }
             else
             {
                 onTarget = false;
                 interaction_info_ui.SetActive(false);
+                hanIcon.gameObject.SetActive(false);
+                centerPoint.gameObject.SetActive(true);
             }
         }
         else
         {
             onTarget = false;
             interaction_info_ui.SetActive(false);
+            hanIcon.gameObject.SetActive(false);
+            centerPoint.gameObject.SetActive(true);
         }
+    }
+
+    public void DisableSelection()
+    {
+        hanIcon.enabled = false;
+        centerPoint.enabled = false;
+        interaction_info_ui.SetActive(false);
+
+    }
+
+    public void EnableSelection()
+    {
+        hanIcon.enabled = true;
+        centerPoint.enabled = true;
+        interaction_info_ui.SetActive(true);
+
+
     }
 }

@@ -85,4 +85,18 @@ public class PlayerState : MonoBehaviour
     {
         currentHunger = newHunger;
     }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+
+        if (currentHealth <= 0)
+        {
+            Debug.Log("Player is Dead");
+        }
+        else
+        {
+            Debug.Log("player get hit");
+        }
+    }
 }
