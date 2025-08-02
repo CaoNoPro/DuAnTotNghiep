@@ -22,6 +22,8 @@ public class InventorySystem : MonoBehaviour
 
     //public bool isFull;
 
+    public List<string> itemPickedUp;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -31,6 +33,7 @@ public class InventorySystem : MonoBehaviour
         else
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -90,7 +93,10 @@ public class InventorySystem : MonoBehaviour
 
     public void AddToInventory(string itemName)
     {
-
+        if (SaveManager.Instance.isLoading == false)
+        {
+            //playsound
+        }
         whatSlotToEquip = FindNextEmptuSlot();
 
         itemToAdd = Instantiate(Resources.Load<GameObject>(itemName), whatSlotToEquip.transform.position, whatSlotToEquip.transform.rotation);

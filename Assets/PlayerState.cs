@@ -65,12 +65,6 @@ public class PlayerState : MonoBehaviour
             distanceTravelled = 0;
             currentHunger -= 1;
         }
-
-
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            currentHealth -= 10;
-        }
     }
 
     public void setHealth(float newHealth)
