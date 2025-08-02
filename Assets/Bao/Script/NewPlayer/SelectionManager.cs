@@ -33,7 +33,7 @@ public class SelectionManager : MonoBehaviour
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
+        RaycastHit hit; 
         if (Physics.Raycast(ray, out hit))
         {
             var selectionTransform = hit.transform;

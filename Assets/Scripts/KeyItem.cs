@@ -1,6 +1,11 @@
 using UnityEngine;
 
-public enum KeyType { Red, Blue, Green, Black }
+public enum KeyType { Red, Blue, Green, Black,
+    BlueKey,
+    GreenKey,
+    BlackKey,
+    RedKey
+}
 
 public class KeyItem : MonoBehaviour
 {

@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
-
-
 
 
 public class PlayerInventory : MonoBehaviour
@@ -11,6 +10,8 @@ public class PlayerInventory : MonoBehaviour
 
     // Lưu các item khác
     private HashSet<ItemType> inventory = new HashSet<ItemType>();
+
+    public static PlayerInventory Instance { get; internal set; }
 
     // Thêm chìa khóa
     public void CollectKey(KeyType keyType)
@@ -36,5 +37,10 @@ public class PlayerInventory : MonoBehaviour
     public bool HasItem(ItemType item)
     {
         return inventory.Contains(item);
+    }
+
+    internal bool HasKey(object blackKey)
+    {
+        throw new NotImplementedException();
     }
 }

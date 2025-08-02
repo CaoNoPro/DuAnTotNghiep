@@ -11,6 +11,9 @@ public class InventorySlot : MonoBehaviour
     private ItemData currentItem;
     private PlayerVirtual playerVirtual; // Reference to your PlayerVirtual script
 
+    public bool HasItem { get; internal set; }
+    public object CurrentItem { get; internal set; }
+
     void Awake()
     {
         // Get a reference to the PlayerVirtual script when the slot is created
