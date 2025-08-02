@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4003836799077089755}
   - component: {fileID: 7662733197748267885}
   - component: {fileID: 739727212950568109}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,9 +118,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8965932648693824963}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: road4
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
