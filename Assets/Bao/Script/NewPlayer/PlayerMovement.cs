@@ -14,10 +14,17 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 velocity;
 
-    bool isGrounded; 
+    bool isGrounded;
     void Update()
     {
-            //checking if we hit the ground to reset our falling velocity, otherwise we will fall faster the next time
+        if (DialogSystem.Instance.dialogUIActive == false) 
+        {
+            Movement();
+        }
+    }
+    public void Movement()
+    {
+        //checking if we hit the ground to reset our falling velocity, otherwise we will fall faster the next time
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
  
         if (isGrounded && velocity.y < 0)

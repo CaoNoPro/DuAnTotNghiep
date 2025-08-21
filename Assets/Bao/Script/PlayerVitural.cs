@@ -82,11 +82,8 @@ public class PlayerVirtual : MonoBehaviour
             Time.timeScale = inventoryOpen ? 0f : 1f;
         }
 
-        // Handle Vitals (Health, Hunger, Thirst)
         HandleVitals();
 
-        // Update health counter text
-        // Ensure healthCounter is assigned in the Inspector and you have a PlayerState reference if needed
         if (healthCounter != null)
         {
             healthCounter.text = Mathf.CeilToInt(HealthSlider.value).ToString() + "/" + maxHealth.ToString();
@@ -147,7 +144,6 @@ public class PlayerVirtual : MonoBehaviour
             CharacterDead();
     }
 
-    // --- NEW: Method to use an item ---
     public void UseItem(ItemData itemToUse)
     {
         if (isDead) return;
@@ -205,9 +201,6 @@ public class PlayerVirtual : MonoBehaviour
         // Show game over UI
         if (GameOverUI != null)
             GameOverUI.SetActive(true);
-
-        // Optional: Disable player movement/input scripts here
-        // For example: GetComponent<PlayerMovement>().enabled = false;
     }
 
     public void AddItemToInventory(ItemData newItem)

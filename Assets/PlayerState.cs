@@ -1,11 +1,10 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class PlayerState : MonoBehaviour
 {
     public static PlayerState Instance { get; set; }
-
-
 
     // Health
     public float currentHealth;
@@ -21,9 +20,12 @@ public class PlayerState : MonoBehaviour
     public float currentHunger;
     public float maxHunger;
     float distanceTravelled = 0;
-    Vector3 lastPosition;
+    public Vector3 lastPosition;
 
     public GameObject playerBody;
+    public GameObject diePanel;
+    public TextMeshProUGUI loadingText;
+    public bool isDead = false;
 
     private void Awake()
     {
@@ -37,13 +39,18 @@ public class PlayerState : MonoBehaviour
         }
     }
 
-
     void Start()
     {
         currentHealth = maxHealth;
         currentHunger = maxHunger;
         currentThirst = maxThirst;
         StartCoroutine(decreaseThirst());
+
+        if (diePanel != null)
+        {
+            diePanel.SetActive(false);
+        }
+        lastPosition = playerBody.transform.position;
     }
 
     IEnumerator decreaseThirst()
@@ -57,13 +64,16 @@ public class PlayerState : MonoBehaviour
 
     void Update()
     {
-        distanceTravelled += Vector3.Distance(playerBody.transform.position, lastPosition);
-        lastPosition = playerBody.transform.position;
-
-        if (distanceTravelled >= 5)
+        if (!isDead)
         {
-            distanceTravelled = 0;
-            currentHunger -= 1;
+            distanceTravelled += Vector3.Distance(playerBody.transform.position, lastPosition);
+            lastPosition = playerBody.transform.position;
+
+            if (distanceTravelled >= 5)
+            {
+                distanceTravelled = 0;
+                currentHunger -= 1;
+            }
         }
     }
 
@@ -71,10 +81,12 @@ public class PlayerState : MonoBehaviour
     {
         currentHealth = newHealth;
     }
+
     public void setThirst(float newThirst)
     {
         currentThirst = newThirst;
     }
+
     public void setHunger(float newHunger)
     {
         currentHunger = newHunger;
@@ -82,15 +94,34 @@ public class PlayerState : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
+        if (!isDead)
+        {
+            currentHealth -= damage;
+            if (currentHealth <= 0)
+            {
+                currentHealth = 0;
+                isDead = true;
+                Debug.Log("Player is Dead");
 
-        if (currentHealth <= 0)
-        {
-            Debug.Log("Player is Dead");
-        }
-        else
-        {
-            Debug.Log("player get hit");
+                if (diePanel != null)
+                {
+                    diePanel.SetActive(true);
+                }
+
+                if (SaveManager.Instance != null && SaveManager.Instance.DoesFileExists(1))
+                {
+                    Debug.Log("Auto-loading last save file...");
+                    SaveManager.Instance.StartLoadedGame(1);
+                }
+                else
+                {
+                    Debug.LogWarning("No save file found. Cannot auto-load.");
+                }
+            }
+            else
+            {
+                Debug.Log("player get hit");
+            }
         }
     }
 }
